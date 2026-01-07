@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KONZEPT | LLGE</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #ede6df;
+  --dark: #1f1f1f;
+  --glass: rgba(255,255,255,0.65);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: radial-gradient(circle at top, #f5efe9, #e5ddd4);
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* SOFT FLOATING LIGHTS */
+body::before, body::after {
+  content: "";
+  position: fixed;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.35;
+  z-index: -1;
+}
+
+body::before {
+  background: #ffffff;
+  top: -120px;
+  left: -120px;
+}
+
+body::after {
+  background: #cfc6bd;
+  bottom: -120px;
+  right: -120px;
+}
+
+/* MAIN WRAPPER */
+.wrapper {
+  width: 100%;
+  height: 100vh;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* NAV */
+.nav {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.nav button {
+  background: transparent;
+  border: 2px solid #000;
+  padding: 0.6rem 2.2rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.35s ease;
+}
+
+.nav button.active,
+.nav button:hover {
+  background: #000;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* GLASS PANEL */
+.panel {
+  flex: 1;
+  background: radial-gradient(circle at top, #f5efe9, #e5ddd4);
+  border-radius: 34px;
+  box-shadow: 0 40px 90px rgba(0,0,0,0.15);
+  padding: 4rem;
+  display: grid;
+  grid-template-columns: 1.3fr 2fr;
+  gap: 4rem;
+  align-items: center;
+  animation: panelIn 0.9s ease;
+}
+
+@keyframes panelIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* LEFT BRAND */
+.brand-box {
+  background: linear-gradient(145deg, #ffffff, #f2ede7);
+  border-radius: 30px;
+  padding: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05),
+              0 30px 70px rgba(0,0,0,0.1);
+}
+
+.brand-box img {
+  width: 100%;
+  max-width: 520px;
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+/* RIGHT CONTENT */
+.content {
+  display: none;
+}
+
+.content.active {
+  display: grid;
+  gap: 1.8rem;
+  animation: fadeSlide 0.6s ease;
+}
+
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateX(25px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ABOUT INFO */
+.info {
+  background: linear-gradient(145deg, #ffffff, #f3eee9);
+  padding: 1.2rem 2rem;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  font-size: 0.85rem;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+}
+
+.info i {
+  font-size: 1.1rem;
+}
+
+/* SOCIALS */
+.socials {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.8rem;
+}
+
+.social {
+  background: linear-gradient(145deg, #ffffff, #f2ede7);
+  border-radius: 22px;
+  padding: 1.6rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.35s ease;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.1);
+}
+
+.social i {
+  font-size: 1.4rem;
+}
+
+.social:hover {
+  transform: translateY(-8px) scale(1.04);
+}
+
+/* PRODUCTS */
+.products {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.product {
+  background: linear-gradient(145deg, #ffffff, #f3eee9);
+  border-radius: 24px;
+  padding: 2rem;
+  height: 140px;
+  box-shadow: 0 20px 45px rgba(0,0,0,0.1);
+}
+
+/* RESPONSIVE */
+@media (max-width: 1000px) {
+  .panel {
+    grid-template-columns: 1fr;
+    padding: 3rem;
+  }
+
+  .socials {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* PRODUCTS FULL WIDTH MODE */
+.panel.products-view {
+  grid-template-columns: 1fr;
+}
+
+/* HIDE LOGO IN PRODUCTS */
+.panel.products-view .brand-box {
+  display: none;
+}
+
+/* PRODUCT LAYOUT (REFERENCE STYLE) */
+.product-categories {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.product-categories button {
+  background: transparent;
+  border: 1.5px solid #000;
+  padding: 0.45rem 1.6rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.product-categories button.active {
+  background: #000;
+  color: #fff;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem;
+  text-align: center;
+}
+
+.product-card img {
+  width: 100%;
+  max-width: 180px;
+  margin-bottom: 1rem;
+}
+
+.product-card {
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+/* PRODUCT HOVER (LUXURY ZOOM) */
+.product-card img {
+  transition: transform 0.4s ease;
+}
+
+.product-card:hover img {
+  transform: scale(1.08);
+}
+
+/* PAGINATION */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+.page-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: 2px solid #000;
+  background: transparent;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.page-btn.active {
+  background: #000;
+  color: #fff;
+}
+
+.page-arrow {
+  border: 2px solid #000;
+  background: transparent;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+/* CATEGORY ACTIVE STATE */
+.product-categories button {
+  transition: all 0.3s ease;
+}
+
+.product-categories button:hover {
+  background: #000;
+  color: #fff;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+  <!-- NAV -->
+  <div class="nav">
+    <button class="active" onclick="showTab('about', this)">ABOUT</button>
+    <button onclick="showTab('contact', this)">CONTACT</button>
+    <button onclick="showTab('products', this)">PRODUCTS</button>
+  </div>
+
+  <!-- PANEL -->
+  <div class="panel">
+
+    <!-- LEFT -->
+    <div class="brand-box">
+      <!-- 🔁 CHANGE THIS IMAGE PER BRAND -->
+      <img src="brand2.png" alt="Brand Logo">
+    </div>
+
+    <!-- ABOUT -->
+<div class="content active" id="about">
+  <div class="info">
+    <i class="fa-solid fa-circle-check"></i> VERIFIED BRAND
+  </div>
+  <div class="info">
+    <i class="fa-solid fa-calendar"></i> YEAR OF ESTABLISHMENT
+  </div>
+  <div class="info">
+    <i class="fa-solid fa-briefcase"></i> NATURE OF BUSINESS
+  </div>
+</div>
+
+
+    <!-- CONTACT -->
+    <div class="content" id="contact">
+      <div class="socials">
+        <div class="social"><i class="fab fa-facebook"></i> Facebook</div>
+        <div class="social"><i class="fab fa-instagram"></i> Instagram</div>
+        <div class="social"><i class="fab fa-x-twitter"></i> Twitter</div>
+        <div class="social"><i class="fab fa-youtube"></i> YouTube</div>
+        <div class="social"><i class="fab fa-telegram"></i> Telegram</div>
+        <div class="social"><i class="fa-solid fa-envelope"></i> Email</div>
+      </div>
+    </div>
+
+<!-- PRODUCTS -->
+<!-- PRODUCTS -->
+<div class="content" id="products">
+
+  <!-- CATEGORIES -->
+  <div class="product-categories">
+    <button class="active" onclick="filterCategory('bags', this)">BAGS</button>
+    <button onclick="filterCategory('belt', this)">BELT</button>
+    <button onclick="filterCategory('shoes', this)">SHOES</button>
+    <button onclick="filterCategory('wallet', this)">WALLET</button>
+  </div>
+
+  <!-- PRODUCTS GRID -->
+  <div class="product-grid">
+
+    <div class="product-card bags">
+      <img src="bag1.png">
+      <div>1 Color</div>
+      <div>Sling Bag</div>
+      <div>P 000,000.00</div>
+    </div>
+
+    <div class="product-card bags">
+      <img src="bag2.png">
+      <div>1 Color</div>
+      <div>Sling Bag</div>
+      <div>P 000,000.00</div>
+    </div>
+
+    <div class="product-card bags">
+      <img src="bag3.png">
+      <div>1 Color</div>
+      <div>Sling Bag</div>
+      <div>P 000,000.00</div>
+    </div>
+
+    <div class="product-card belt">
+      <img src="belt1.png">
+      <div>1 Color</div>
+      <div>Leather Belt</div>
+      <div>P 000,000.00</div>
+    </div>
+
+    <div class="product-card shoes">
+      <img src="shoes1.png">
+      <div>1 Color</div>
+      <div>Leather Shoes</div>
+      <div>P 000,000.00</div>
+    </div>
+
+    <div class="product-card wallet">
+      <img src="wallet1.png">
+      <div>1 Color</div>
+      <div>Wallet</div>
+      <div>P 000,000.00</div>
+    </div>
+
+  </div>
+
+  <!-- PAGINATION -->
+  <div class="pagination">
+    <button class="page-arrow">←</button>
+    <button class="page-btn active">1</button>
+    <button class="page-btn">2</button>
+    <button class="page-btn">3</button>
+    <button class="page-btn">4</button>
+    <button class="page-arrow">→</button>
+  </div>
+
+</div>
+
+
+  </div>
+</div>
+
+<script>
+function showTab(tab, btn) {
+  document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+  document.getElementById(tab).classList.add('active');
+
+  document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const panel = document.querySelector('.panel');
+
+  if (tab === 'products') {
+    panel.classList.add('products-view');
+  } else {
+    panel.classList.remove('products-view');
+  }
+}
+
+/* CATEGORY FILTER */
+function filterCategory(category, btn) {
+  document.querySelectorAll('.product-categories button')
+    .forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  document.querySelectorAll('.product-card').forEach(card => {
+    card.style.display = card.classList.contains(category) ? 'block' : 'none';
+  });
+}
+</script>
+
+
+
+</body>
+</html>

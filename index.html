@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LLGE | Local Leather Goods Exposura</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #ede6df;
+  --dark: #1f1f1f;
+  --card: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: linear-gradient(180deg, #f3ede7, #e4dbd2);
+  color: var(--dark);
+  overflow: hidden;
+}
+
+/* SOFT FLOATING LIGHTS */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, rgba(255,255,255,0.55), transparent 70%);
+  border-radius: 50%;
+  animation: float 12s infinite alternate ease-in-out;
+  z-index: 0;
+}
+
+body::after {
+  top: auto;
+  bottom: -100px;
+  right: -120px;
+  animation-delay: 3s;
+}
+
+body::before {
+  top: -120px;
+  left: -120px;
+}
+
+@keyframes float {
+  from { transform: translateY(0); }
+  to { transform: translateY(60px); }
+}
+
+/* INTRO */
+#intro {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, #f6efe9, #e2d8cf);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2.5rem;
+  transition: opacity 1s ease, transform 1s ease;
+  z-index: 10;
+  cursor: pointer;
+}
+
+#intro.hide {
+  opacity: 0;
+  transform: scale(1.1);
+  pointer-events: none;
+}
+
+.intro-logo {
+  width: clamp(320px, 55vw, 620px);
+  animation: glowIn 1.5s ease;
+  filter: drop-shadow(0 25px 60px rgba(0,0,0,0.25));
+}
+
+@keyframes glowIn {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.continue {
+  border: 2px solid #000;
+  padding: 1rem 2.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  transition: all 0.4s ease;
+}
+
+.continue:hover {
+  background: #000;
+  color: #fff;
+  transform: scale(1.05);
+}
+
+/* PARTNERS */
+#partners {
+  min-height: 100vh;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 3rem;
+  position: relative;
+  z-index: 1;
+}
+
+#partners.show {
+  opacity: 1;
+}
+
+.partner-grid {
+  max-width: 1600px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1.4fr 2.6fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+/* LLGE MARK */
+.llge-mark {
+  background: linear-gradient(145deg, rgba(255,255,255,0.75), rgba(240,235,230,0.75));
+  backdrop-filter: blur(16px);
+  padding: 8rem 5rem;
+  border-radius: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.12);
+}
+
+.llge-mark img {
+  width: clamp(300px, 40vw, 560px);
+  filter: drop-shadow(0 30px 60px rgba(0,0,0,0.25));
+}
+
+/* BRANDS */
+.brands {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3rem;
+}
+
+.brand-card {
+  background: linear-gradient(145deg, rgba(255,255,255,0.9), rgba(245,240,235,0.9));
+  backdrop-filter: blur(12px);
+  border-radius: 30px;
+  height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.1);
+  transition: transform 0.45s ease, box-shadow 0.45s ease;
+}
+
+.brand-card::before {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, rgba(0,0,0,0.06), transparent 70%);
+  border-radius: 50%;
+  transition: transform 0.6s ease;
+}
+
+.brand-card:hover::before {
+  transform: scale(1.3);
+}
+
+.brand-card img {
+  width: clamp(160px, 18vw, 260px);
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.45s ease;
+  z-index: 1;
+}
+
+.brand-card:hover {
+  transform: translateY(-16px) scale(1.02);
+  box-shadow: 0 50px 110px rgba(0,0,0,0.2);
+}
+
+.brand-card:hover img {
+  transform: scale(1.15);
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .partner-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .llge-mark {
+    padding: 5rem 3rem;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- INTRO -->
+<div id="intro">
+  <img src="logo.png" alt="LLGE Logo" class="intro-logo">
+  <div class="continue">PRESS ANYWHERE TO CONTINUE</div>
+</div>
+
+<!-- PARTNERS -->
+<section id="partners">
+  <div class="partner-grid">
+
+    <div class="llge-mark">
+      <img src="logo.png" alt="LLGE">
+    </div>
+
+    <div class="brands">
+      <div class="brand-card" data-href="ely-knows.html">
+        <img src="brand1.png" alt="Ely Knows">
+      </div>
+      <div class="brand-card" data-href="konzept.html">
+        <img src="brand2.png" alt="Konzept">
+      </div>
+      <div class="brand-card" data-href="nifty-shoes.html">
+        <img src="brand3.png" alt="Nifty Shoes">
+      </div>
+      <div class="brand-card" data-href="zapateria.html">
+        <img src="brand4.png" alt="Zapateria">
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+const intro = document.getElementById('intro');
+const partners = document.getElementById('partners');
+
+intro.addEventListener('click', () => {
+  intro.classList.add('hide');
+  partners.classList.add('show');
+  document.body.style.overflow = 'auto';
+});
+
+document.querySelectorAll('.brand-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const link = card.dataset.href;
+    if (link) window.location.href = link;
+  });
+});
+</script>
+
+</body>
+</html>
