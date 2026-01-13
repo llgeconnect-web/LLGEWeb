@@ -25,7 +25,15 @@
 body {
   background: radial-gradient(circle at top, #f5efe9, #e5ddd4);
   min-height: 100vh;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* SCROLLABLE PRODUCTS AREA */
+#products {
+  max-height: calc(100vh - 260px);
+  overflow-y: auto;
+  padding-right: 0.8rem;
 }
 
 /* SOFT FLOATING LIGHTS */
@@ -204,6 +212,8 @@ body::after {
   box-shadow: 0 20px 45px rgba(0,0,0,0.1);
 }
 
+
+
 /* RESPONSIVE */
 @media (max-width: 1000px) {
   .panel {
@@ -235,12 +245,11 @@ body::after {
 }
 
 .product-categories button {
-  background: transparent;
   border: 1.5px solid #000;
+  background: transparent;
   padding: 0.45rem 1.6rem;
   border-radius: 999px;
   font-size: 0.7rem;
-  letter-spacing: 1px;
   cursor: pointer;
 }
 
@@ -257,14 +266,32 @@ body::after {
 }
 
 .product-card img {
-  width: 100%;
   max-width: 180px;
-  margin-bottom: 1rem;
+  width: 100%;
 }
 
 .product-card {
   font-size: 0.8rem;
-  line-height: 1.6;
+}
+
+.price {
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-top: 0.2rem;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+.page-arrow {
+  border: 2px solid #000;
+  background: transparent;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
 }
 
 /* PRODUCT HOVER (LUXURY ZOOM) */
@@ -275,6 +302,25 @@ body::after {
 .product-card:hover img {
   transform: scale(1.08);
 }
+
+.price {
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-top: 0.2rem;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+.page-arrow {
+  border: 2px solid #000;
+  background: transparent;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
 
 /* PAGINATION */
 .pagination {
@@ -317,6 +363,86 @@ body::after {
   background: #000;
   color: #fff;
 }
+
+/* CUSTOM SCROLLBAR */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.05);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    #000000,
+    #3a3a3a
+  );
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #000;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #000 rgba(0,0,0,0.05);
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .panel {
+    grid-template-columns: 1fr;
+    justify-items: center; /* <-- center content horizontally */
+    text-align: center;    /* <-- optional: center text inside */
+    padding: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    padding: 1.5rem;
+  }
+
+  .panel {
+    padding: 2rem;
+    justify-items: center;  /* center content */
+    text-align: center;     /* center text inside panel */
+    gap: 1.5rem;            /* reduce gap for smaller screens */
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center; /* center each product */
+  }
+}
+
+@media (max-width: 480px) {
+  .panel {
+    padding: 1.5rem;
+    justify-items: center;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .product-grid {
+    grid-template-columns: 1fr;
+    justify-items: center; /* center products */
+  }
+
+  .nav button {
+    padding: 0.5rem 1.4rem;
+  }
+
+  .brand-box img {
+    max-width: 80%; /* scale brand logo down on small screens */
+  }
+}
+
 
 </style>
 </head>
@@ -368,75 +494,119 @@ body::after {
     </div>
 
 <!-- PRODUCTS -->
-<!-- PRODUCTS -->
-<div class="content" id="products">
+    <div class="content" id="products">
 
-  <!-- CATEGORIES -->
-  <div class="product-categories">
-    <button class="active" onclick="filterCategory('bags', this)">BAGS</button>
-    <button onclick="filterCategory('belt', this)">BELT</button>
-    <button onclick="filterCategory('shoes', this)">SHOES</button>
-    <button onclick="filterCategory('wallet', this)">WALLET</button>
-  </div>
+      <div class="product-categories">
+        <button class="active" onclick="filterCategory('all',this)">ALL</button>
+        <button onclick="filterCategory('bags',this)">BAGS</button>
+        <button onclick="filterCategory('belt',this)">BELT</button>
+        <button onclick="filterCategory('shoes',this)">SHOES</button>
+        <button onclick="filterCategory('wallet',this)">WALLET</button>
+      </div>
 
-  <!-- PRODUCTS GRID -->
-  <div class="product-grid">
+      <div class="product-grid">
+        <div class="product-card bags">
+          <img src="bag1.png">
+          <div>Sling Bag</div>
+          <div class="price">₱ 2,499.00</div>
+        </div>
 
-    <div class="product-card bags">
-      <img src="bag1.png">
-      <div>1 Color</div>
-      <div>Sling Bag</div>
-      <div>P 000,000.00</div>
-    </div>
+        <div class="product-card bags">
+          <img src="bag2.png">
+          <div>Sling Bag</div>
+          <div class="price">₱ 2,499.00</div>
+        </div>
 
-    <div class="product-card bags">
-      <img src="bag2.png">
-      <div>1 Color</div>
-      <div>Sling Bag</div>
-      <div>P 000,000.00</div>
-    </div>
+        <div class="product-card bags">
+          <img src="bag3.png">
+          <div>Sling Bag</div>
+          <div class="price">₱ 2,499.00</div>
+        </div>
 
-    <div class="product-card bags">
-      <img src="bag3.png">
-      <div>1 Color</div>
-      <div>Sling Bag</div>
-      <div>P 000,000.00</div>
-    </div>
+        <div class="product-card bags">
+          <img src="bag4.png">
+          <div>Sling Bag</div>
+          <div class="price">₱ 2,499.00</div>
+        </div>
 
-    <div class="product-card belt">
-      <img src="belt1.png">
-      <div>1 Color</div>
-      <div>Leather Belt</div>
-      <div>P 000,000.00</div>
-    </div>
+        <div class="product-card belt">
+          <img src="belt1.png">
+          <div>Leather Belt</div>
+          <div class="price">₱ 1,299.00</div>
+        </div>
 
-    <div class="product-card shoes">
-      <img src="shoes1.png">
-      <div>1 Color</div>
-      <div>Leather Shoes</div>
-      <div>P 000,000.00</div>
-    </div>
+        <div class="product-card belt">
+          <img src="belt2.png">
+          <div>Leather Belt</div>
+          <div class="price">₱ 1,299.00</div>
+        </div>
 
-    <div class="product-card wallet">
-      <img src="wallet1.png">
-      <div>1 Color</div>
-      <div>Wallet</div>
-      <div>P 000,000.00</div>
-    </div>
+        <div class="product-card belt">
+          <img src="belt3.png">
+          <div>Leather Belt</div>
+          <div class="price">₱ 1,299.00</div>
+        </div>
 
-  </div>
+        <div class="product-card belt">
+          <img src="belt4.png">
+          <div>Leather Belt</div>
+          <div class="price">₱ 1,299.00</div>
+        </div>
 
-  <!-- PAGINATION -->
-  <div class="pagination">
-    <button class="page-arrow">←</button>
-    <button class="page-btn active">1</button>
-    <button class="page-btn">2</button>
-    <button class="page-btn">3</button>
-    <button class="page-btn">4</button>
-    <button class="page-arrow">→</button>
-  </div>
+        <div class="product-card shoes">
+          <img src="shoes1.png">
+          <div>Leather Shoes</div>
+          <div class="price">₱ 3,999.00</div>
+        </div>
 
-</div>
+        <div class="product-card shoes">
+          <img src="shoes2.png">
+          <div>Leather Shoes</div>
+          <div class="price">₱ 3,999.00</div>
+        </div>
+
+        <div class="product-card shoes">
+          <img src="shoes3.png">
+          <div>Leather Shoes</div>
+          <div class="price">₱ 3,999.00</div>
+        </div>
+
+        <div class="product-card shoes">
+          <img src="shoes4.png">
+          <div>Leather Shoes</div>
+          <div class="price">₱ 3,999.00</div>
+        </div>
+
+        <div class="product-card wallet">
+          <img src="wallet1.png">
+          <div>Wallet</div>
+          <div class="price">₱ 999.00</div>
+        </div>
+
+        <div class="product-card wallet">
+          <img src="wallet2.png">
+          <div>Wallet</div>
+          <div class="price">₱ 999.00</div>
+        </div>
+
+        <div class="product-card wallet">
+          <img src="wallet3.png">
+          <div>Wallet</div>
+          <div class="price">₱ 999.00</div>
+        </div>
+
+        <div class="product-card wallet">
+          <img src="wallet4.png">
+          <div>Wallet</div>
+          <div class="price">₱ 999.00</div>
+        </div>
+      </div>
+
+      <div class="pagination">
+        <button class="page-arrow" onclick="prevCategory()">←</button>
+        <button class="page-arrow" onclick="nextCategory()">→</button>
+      </div>
+
 
 
   </div>
@@ -450,26 +620,44 @@ function showTab(tab, btn) {
   document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
 
-  const panel = document.querySelector('.panel');
-
-  if (tab === 'products') {
-    panel.classList.add('products-view');
-  } else {
-    panel.classList.remove('products-view');
-  }
+  document.querySelector('.panel')
+    .classList.toggle('products-view', tab === 'products');
 }
 
-/* CATEGORY FILTER */
-function filterCategory(category, btn) {
-  document.querySelectorAll('.product-categories button')
-    .forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
+const categories = ['all','bags','belt','shoes','wallet'];
+let currentCategoryIndex = 0;
+
+function filterCategory(category, btn=null) {
+  currentCategoryIndex = categories.indexOf(category);
+
+  const buttons = document.querySelectorAll('.product-categories button');
+  buttons.forEach(b => b.classList.remove('active'));
+
+  if (btn) buttons[currentCategoryIndex].classList.add('active');
 
   document.querySelectorAll('.product-card').forEach(card => {
-    card.style.display = card.classList.contains(category) ? 'block' : 'none';
+    card.style.display =
+      category === 'all' || card.classList.contains(category)
+        ? 'block'
+        : 'none';
   });
 }
+
+function nextCategory() {
+  currentCategoryIndex = (currentCategoryIndex + 1) % categories.length;
+  filterCategory(categories[currentCategoryIndex]);
+}
+
+function prevCategory() {
+  currentCategoryIndex =
+    (currentCategoryIndex - 1 + categories.length) % categories.length;
+  filterCategory(categories[currentCategoryIndex]);
+}
+
+filterCategory('all');
 </script>
+
+
 
 
 
