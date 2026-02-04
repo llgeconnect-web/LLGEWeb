@@ -10,9 +10,35 @@
 
 <style>
 :root {
-  --bg: #ede6df;
+  --orange: #FF7900;
+  --orange-soft: #ff9b3d;
+  --orange-deep: #e66c00;
   --dark: #1f1f1f;
-  --glass: rgba(255,255,255,0.65);
+  --glass: rgba(255,255,255,0.7);
+}
+
+/* ORANGE LUXURY ACCENT */
+.glow-orange {
+  position: relative;
+  background: linear-gradient(145deg, #ffffff, #fff5ec);
+  border-radius: inherit;
+  z-index: 1;
+}
+
+.glow-orange::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    #ff7900,
+    #ffb067,
+    #ff7900
+  );
+  z-index: -1;
+  filter: blur(6px);
+  opacity: 0.55;
 }
 
 * {
@@ -24,12 +50,13 @@
 
 /* BODY & SCROLL */
 body {
-  background: radial-gradient(circle at top, #f5efe9, #e5ddd4);
+  background:
+    radial-gradient(circle at top, #ff9b3d 0%, transparent 45%),
+    linear-gradient(180deg, #FF7900, #e66c00);
   min-height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;
 }
-
 /* CUSTOM SCROLLBAR */
 ::-webkit-scrollbar {
   width: 10px;
@@ -75,13 +102,13 @@ body::before, body::after {
 }
 
 body::before {
-  background: #ffffff;
+  background: rgba(255,255,255,0.9);
   top: -120px;
   left: -120px;
 }
 
 body::after {
-  background: #cfc6bd;
+  background: rgba(255, 180, 100, 0.9);
   bottom: -120px;
   right: -120px;
 }
@@ -116,23 +143,56 @@ body::after {
 
 .nav button.active,
 .nav button:hover {
-  background: #000;
+  background: var(--orange);
+  border-color: var(--orange);
   color: #fff;
-  transform: translateY(-2px);
 }
 
 /* GLASS PANEL */
 .panel {
+  position: relative;
   flex: 1;
-  background: radial-gradient(circle at top, #f5efe9, #e5ddd4);
-  border-radius: 34px;
-  box-shadow: 0 40px 90px rgba(0,0,0,0.15);
   padding: 4rem;
   display: grid;
   grid-template-columns: 1.3fr 2fr;
   gap: 4rem;
   align-items: center;
+  border-radius: 34px;
+
+  /* warm white with orange DNA */
+  background: linear-gradient(
+    180deg,
+    #fff3e6,
+    #fff8f3
+  );
+
+  /* confident orange frame */
+  border: 2px solid rgba(255, 121, 0, 0.45);
+
+  box-shadow:
+    0 40px 90px rgba(0,0,0,0.18);
+
   animation: panelIn 0.9s ease;
+}
+
+.panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 34px;
+  background: linear-gradient(145deg, #ffffff, #fff3e6);
+  z-index: -1;
+}
+
+.panel::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 36px;
+  background: linear-gradient(135deg, #ff7900, #ffb067);
+  z-index: -2;
+  filter: blur(12px);
+  opacity: 0.45;
 }
 
 @keyframes panelIn {
@@ -140,16 +200,33 @@ body::after {
   to { opacity: 1; transform: scale(1); }
 }
 
-/* LEFT BRAND */
 .brand-box {
-  background: linear-gradient(145deg, #ffffff, #f2ede7);
+  background: linear-gradient(
+    145deg,
+    #fff6ee,
+    #fffaf7
+  );
+
   border-radius: 30px;
   padding: 4rem;
+
+  border: 1.5px solid rgba(255,121,0,0.35);
+
+  box-shadow:
+    0 22px 55px rgba(0,0,0,0.12);
+
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05),
-              0 30px 70px rgba(0,0,0,0.1);
+}
+
+.brand-box::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: 36px;
+  background: radial-gradient(circle, rgba(255,121,0,0.35), transparent 70%);
+  z-index: -1;
 }
 
 .brand-box img {
@@ -179,49 +256,238 @@ body::after {
   to { opacity: 1; transform: translateX(0); }
 }
 
-/* ABOUT INFO */
-.info {
-  background: linear-gradient(145deg, #ffffff, #f3eee9);
-  padding: 1.2rem 2rem;
-  border-radius: 999px;
+.news-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.news-title {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 18px;
+  background: linear-gradient(90deg, #ff7a00, #ffb066);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  position: relative;
+}
+
+.news-title::after {
+  content: "";
+  display: block;
+  width: 70px;
+  height: 4px;
+  margin: 10px auto 0;
+  background: linear-gradient(90deg, #ff7a00, #ffb066);
+  border-radius: 10px;
+}
+
+/* SLIDER */
+.news-slider {
+  position: relative;
+  width: 520px;        /* matches nicely with logo size */
+  height: 640px;       /* 🔥 MAKES IT LONGER */
+  margin: 0 auto;
+  background: #fff7f0;
+  border-radius: 22px;
+  border: 2px solid rgba(255, 140, 0, 0.35);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.15);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.news-track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.6s ease-in-out;
+}
+
+.news-track img {
+  min-width: 100%;
+  height: 100%;
+  object-fit: contain;   /* 🔥 shows whole poster */
+  padding: 12px;
+  border-radius: 16px;
+}
+
+.news-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  border: none;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  font-size: 1.7rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.news-arrow:hover {
+  background: #FF7900;
+}
+
+.news-arrow.left { left: 16px; }
+.news-arrow.right { right: 16px; }
+
+/* highlights sliders*/
+
+.about-sliders {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.highlight-slider {
+  width: 520px;
+  height: 420px;   /* 🔥 shorter than news */
+  background: #fff7f0;
+  border-radius: 22px;
+  border: 2px solid rgba(255,140,0,0.35);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.15);
+  overflow: hidden;
+  position: relative;
+}
+
+.highlight-track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.6s ease;
+}
+
+.highlight-track img {
+  min-width: 100%;
+  height: 100%;
+  object-fit: contain;   /* PERFECT for ads */
+  padding: 14px;
+  border-radius: 18px;
+}
+
+
+.highlight-title {
+  font-size: 26px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 18px;
+  background: linear-gradient(90deg, #ff7a00, #ffb066);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.highlight-title::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  margin: 10px auto 0;
+  background: linear-gradient(90deg, #ff7a00, #ffb066);
+  border-radius: 10px;
+}
+
+.highlight-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  border: none;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  font-size: 1.7rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.highlight-arrow:hover {
+  background: #FF7900;
+}
+
+
+.highlight-arrow.left { left: 12px; }
+.highlight-arrow.right { right: 12px; }
+
+
+
+/* ===== LUXURY CONTACT SECTION ===== */
+
+.contact-luxury {
+  width: 100%;
+  animation: fadeSlide 0.6s ease;
+}
+
+.contact-title {
+  font-size: 30px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 3rem;
+  background: linear-gradient(90deg, #ff7a00, #ffb066);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+}
+
+.contact-card {
+  background: linear-gradient(145deg, #ffffff, #fff3e7);
+  border-radius: 28px;
+  padding: 2.5rem;
+  border: 1.5px solid rgba(255,121,0,0.35);
+  box-shadow:
+    0 22px 50px rgba(0,0,0,0.12);
+}
+
+.contact-card h3 {
+  font-size: 1rem;
+  letter-spacing: 2px;
+  margin-bottom: 2rem;
+  color: #000;
+}
+
+.contact-item {
   display: flex;
   align-items: center;
   gap: 1.2rem;
+  padding: 1rem 1.2rem;
+  border-radius: 18px;
   font-size: 0.85rem;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-}
-
-.info i {
-  font-size: 1.1rem;
-}
-
-/* SOCIALS */
-.socials {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.8rem;
-}
-
-.social {
-  background: linear-gradient(145deg, #ffffff, #f2ede7);
-  border-radius: 22px;
-  padding: 1.6rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  font-size: 0.85rem;
-  cursor: pointer;
+  margin-bottom: 1rem;
+  background: linear-gradient(145deg, #fff7f2, #fffdfb);
   transition: all 0.35s ease;
-  box-shadow: 0 18px 40px rgba(0,0,0,0.1);
 }
 
-.social i {
-  font-size: 1.4rem;
+.contact-item i {
+  font-size: 1.2rem;
+  color: #FF7900;
+  min-width: 22px;
 }
 
-.social:hover {
-  transform: translateY(-8px) scale(1.04);
+.contact-item:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 20px 45px rgba(255,121,0,0.35),
+    0 12px 28px rgba(0,0,0,0.18);
 }
+
+/* Links clean */
+.contact-item {
+  text-decoration: none;
+  color: #000;
+}
+
+
 
 /* PRODUCTS */
 .products {
@@ -240,17 +506,6 @@ body::after {
 
 
 
-/* RESPONSIVE */
-@media (max-width: 1000px) {
-  .panel {
-    grid-template-columns: 1fr;
-    padding: 3rem;
-  }
-
-  .socials {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
 
 /* PRODUCTS FULL WIDTH MODE */
 .panel.products-view {
@@ -280,8 +535,17 @@ body::after {
 }
 
 .product-categories button.active {
-  background: #000;
+  background: var(--orange);
+  border-color: var(--orange);
   color: #fff;
+}
+
+.social:hover,
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow:
+    0 30px 70px rgba(255,121,0,0.4),
+    0 20px 45px rgba(0,0,0,0.2);
 }
 
 .product-grid {
@@ -297,7 +561,30 @@ body::after {
 }
 
 .product-card {
-  font-size: 0.8rem;
+  background: linear-gradient(
+    145deg,
+    #fff3e6,
+    #fff9f5
+  );
+
+  border-radius: 24px;
+  padding: 2rem;
+
+  border: 1.5px solid rgba(255,121,0,0.4);
+
+  box-shadow:
+    0 18px 40px rgba(0,0,0,0.12);
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 28px 65px rgba(255,121,0,0.35),
+    0 20px 45px rgba(0,0,0,0.18);
 }
 
 .price {
@@ -390,6 +677,28 @@ body::after {
   color: #fff;
 }
 
+/* CUSTOM SCROLLBAR */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.05);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    #000000,
+    #3a3a3a
+  );
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #000;
+}
 
 /* Firefox */
 * {
@@ -397,55 +706,102 @@ body::after {
   scrollbar-color: #000 rgba(0,0,0,0.05);
 }
 
-/* RESPONSIVE */
+
+/* ===============================
+   MOBILE & TABLET FASHION MODE
+   =============================== */
+
+/* Tablets & below */
 @media (max-width: 1024px) {
-  .panel {
-    grid-template-columns: 1fr;
-    justify-items: center; /* <-- center content horizontally */
-    text-align: center;    /* <-- optional: center text inside */
-    padding: 2.5rem;
+
+  .about-sliders {
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+    margin-top: 1.5rem;
+  }
+
+  .news-slider,
+  .highlight-slider {
+    width: 100%;
+    max-width: 520px;
+  }
+
+  .news-slider {
+    height: 520px;
+  }
+
+  .highlight-slider {
+    height: 360px;
   }
 }
 
+
+/* Phones */
 @media (max-width: 768px) {
+
   .wrapper {
-    padding: 1.5rem;
+    padding: 1rem;
   }
 
-  .panel {
-    padding: 2rem;
-    justify-items: center;  /* center content */
-    text-align: center;     /* center text inside panel */
-    gap: 1.5rem;            /* reduce gap for smaller screens */
-  }
-
-  .product-grid {
-    grid-template-columns: repeat(2, 1fr);
-    justify-items: center; /* center each product */
-  }
-}
-
-@media (max-width: 480px) {
-  .panel {
-    padding: 1.5rem;
-    justify-items: center;
-    text-align: center;
-    gap: 1rem;
-  }
-
-  .product-grid {
-    grid-template-columns: 1fr;
-    justify-items: center; /* center products */
+  .nav {
+    gap: 0.8rem;
+    flex-wrap: wrap;
   }
 
   .nav button {
-    padding: 0.5rem 1.4rem;
+    padding: 0.55rem 1.2rem;
+    font-size: 0.65rem;
+    letter-spacing: 1.5px;
+  }
+
+  .panel {
+    padding: 1.6rem;
+    border-radius: 26px;
+  }
+
+  .brand-box {
+    padding: 2rem;
   }
 
   .brand-box img {
-    max-width: 80%; /* scale brand logo down on small screens */
+    max-width: 260px;
+    animation: none; /* calmer on mobile */
+  }
+
+  .news-title,
+  .highlight-title {
+    font-size: 22px;
   }
 }
+
+
+@media (max-width: 480px) {
+
+  .news-slider {
+    height: 420px;
+  }
+
+  .highlight-slider {
+    height: 300px;
+  }
+
+  .news-arrow,
+  .highlight-arrow {
+    width: 38px;
+    height: 38px;
+    font-size: 1.3rem;
+  }
+
+  .news-track img,
+  .highlight-track img {
+    padding: 8px;
+  }
+}
+
+
+
+
 
 
 </style>
@@ -473,28 +829,115 @@ body::after {
 
     <!-- ABOUT -->
 <div class="content active" id="about">
-  <div class="info">
-    <i class="fa-solid fa-circle-check"></i> VERIFIED BRAND
+
+  <div class="about-sliders">
+
+    <!-- WHAT'S NEW -->
+    <div class="news-wrapper">
+      <h2 class="news-title">What’s New?</h2>
+
+      <div class="news-slider">
+        <div class="news-track">
+          <img src="news1.png">
+          <img src="news2.png">
+          <img src="news3.png">
+          <img src="news4.png">
+          <img src="news5.png">
+          <img src="news6.png">
+          <img src="news7.png">
+        </div>
+
+        <button class="news-arrow left" onclick="prevNews()">‹</button>
+        <button class="news-arrow right" onclick="nextNews()">›</button>
+      </div>
+    </div>
+
+    <!-- HIGHLIGHTS -->
+    <div class="highlight-wrapper">
+      <h2 class="highlight-title">Highlights</h2>
+
+      <div class="highlight-slider">
+        <div class="highlight-track">
+          <img src="highlight1.png">
+          <img src="highlight2.png">
+          <img src="highlight3.png">
+          <img src="highlight4.png">
+        </div>
+
+        <button class="highlight-arrow left" onclick="prevHighlight()">‹</button>
+        <button class="highlight-arrow right" onclick="nextHighlight()">›</button>
+      </div>
+    </div>
+
   </div>
-  <div class="info">
-    <i class="fa-solid fa-calendar"></i> YEAR OF ESTABLISHMENT
-  </div>
-  <div class="info">
-    <i class="fa-solid fa-briefcase"></i> NATURE OF BUSINESS
-  </div>
+
 </div>
 
-
     <!-- CONTACT -->
+
     <div class="content" id="contact">
-      <div class="socials">
-        <div class="social"><i class="fab fa-facebook"></i> Facebook</div>
-        <div class="social"><i class="fab fa-instagram"></i> Instagram</div>
-        <div class="social"><i class="fab fa-x-twitter"></i> Twitter</div>
-        <div class="social"><i class="fab fa-youtube"></i> YouTube</div>
-        <div class="social"><i class="fab fa-telegram"></i> Telegram</div>
-        <div class="social"><i class="fa-solid fa-envelope"></i> Email</div>
+
+<div class="contact-luxury">
+
+  <h2 class="contact-title">Connect with Ely Knows</h2>
+
+  <div class="contact-grid">
+
+    <!-- SOCIAL ACCOUNTS -->
+    <div class="contact-card">
+      <h3>Social Presence</h3>
+
+      <a href="https://www.facebook.com/elyknowsshoes" target="_blank" class="contact-item">
+        <i class="fab fa-facebook"></i>
+        <span>Facebook — Ely Knows</span>
+      </a>
+
+      <a href="https://www.instagram.com/elyknowsshoes" target="_blank" class="contact-item">
+        <i class="fab fa-instagram"></i>
+        <span>Instagram — Ely Knows PH</span>
+      </a>
+
+      <a href="https://www.tiktok.com/@elyknowsshoes?_r=1&_t=ZS-93PomYANcBg" target="_blank" class="contact-item">
+        <i class="fab fa-tiktok"></i>
+        <span>TikTok — ElyKnows Shoes</span>
+      </a>
+
+      <div class="contact-item">
+        <i class="fa-solid fa-store"></i>
+        <span>Shopee — ElyknowsMarikina</span>
       </div>
+    </div>
+
+    <!-- BUSINESS DETAILS -->
+    <div class="contact-card">
+      <h3>Business Information</h3>
+
+      <div class="contact-item">
+        <i class="fa-solid fa-calendar"></i>
+        <span>Established — 2012</span>
+      </div>
+
+      <div class="contact-item">
+        <i class="fa-solid fa-location-dot"></i>
+        <span>
+          321 E Delapaz St.<br>
+          Sto. Niño, Marikina City
+        </span>
+      </div>
+
+      <div class="contact-item">
+        <i class="fa-solid fa-phone"></i>
+        <span>0967-137-2243</span>
+      </div>
+
+      <div class="contact-item">
+        <i class="fa-solid fa-envelope"></i>
+        <span>elyknowsenterprisesph@gmail.com</span>
+      </div>
+    </div>
+
+  </div>
+</div>
     </div>
 
 <!-- PRODUCTS -->
@@ -617,6 +1060,105 @@ body::after {
 </div>
 
 <script>
+
+  /* =========================
+   HIGHLIGHTS SLIDER SCRIPT
+   ========================= */
+
+/* =========================
+   HIGHLIGHTS SLIDER SCRIPT
+   ========================= */
+
+let currentHighlight = 0;
+let highlightInterval;
+
+function updateHighlight() {
+  const track = document.querySelector('.highlight-track');
+  track.style.transform = `translateX(-${currentHighlight * 100}%)`;
+}
+
+function nextHighlight() {
+  const slides = document.querySelectorAll('.highlight-track img');
+  if (!slides.length) return;
+
+  currentHighlight = (currentHighlight + 1) % slides.length;
+  updateHighlight();
+}
+
+function prevHighlight() {
+  const slides = document.querySelectorAll('.highlight-track img');
+  if (!slides.length) return;
+
+  currentHighlight =
+    (currentHighlight - 1 + slides.length) % slides.length;
+  updateHighlight();
+}
+
+/* AUTO PLAY — 10 SECONDS */
+function startHighlightAutoSlide() {
+  stopHighlightAutoSlide();
+  highlightInterval = setInterval(nextHighlight, 10000);
+}
+
+function stopHighlightAutoSlide() {
+  if (highlightInterval) clearInterval(highlightInterval);
+}
+
+/* INIT (script is already at bottom, so DOM is ready) */
+const highlightSlider = document.querySelector('.highlight-slider');
+
+if (highlightSlider) {
+  startHighlightAutoSlide();
+
+  highlightSlider.addEventListener('mouseenter', stopHighlightAutoSlide);
+  highlightSlider.addEventListener('mouseleave', startHighlightAutoSlide);
+}
+
+
+  // script of news slider
+
+
+let currentNews = 0;
+let newsInterval;
+
+function updateNews() {
+  const track = document.querySelector('.news-track');
+  track.style.transform = `translateX(-${currentNews * 100}%)`;
+}
+
+function nextNews() {
+  const slides = document.querySelectorAll('.news-track img');
+  currentNews = (currentNews + 1) % slides.length;
+  updateNews();
+}
+
+function prevNews() {
+  const slides = document.querySelectorAll('.news-track img');
+  currentNews = (currentNews - 1 + slides.length) % slides.length;
+  updateNews();
+}
+
+/* AUTO PLAY — 10 SECONDS */
+function startNewsAutoSlide() {
+  stopNewsAutoSlide();
+  newsInterval = setInterval(nextNews, 10000);
+}
+
+function stopNewsAutoSlide() {
+  if (newsInterval) clearInterval(newsInterval);
+}
+
+/* Pause on hover (premium UX) */
+document.addEventListener('DOMContentLoaded', () => {
+  const slider = document.querySelector('.news-slider');
+  startNewsAutoSlide();
+
+  slider.addEventListener('mouseenter', stopNewsAutoSlide);
+  slider.addEventListener('mouseleave', startNewsAutoSlide);
+});
+//
+
+
 function showTab(tab, btn) {
   document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
   document.getElementById(tab).classList.add('active');
