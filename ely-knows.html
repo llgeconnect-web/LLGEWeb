@@ -348,7 +348,7 @@ body::after {
 
 .highlight-slider {
   width: 520px;
-  height: 420px;   /* 🔥 shorter than news */
+  height: 640px;   /* same height = perfectly aligned */
   background: #fff7f0;
   border-radius: 22px;
   border: 2px solid rgba(255,140,0,0.35);
@@ -526,12 +526,15 @@ body::after {
 }
 
 .product-categories button {
-  border: 1.5px solid #000;
-  background: transparent;
-  padding: 0.45rem 1.6rem;
+  border: 1.5px solid rgba(0,0,0,0.8);
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(6px);
+  padding: 0.5rem 1.6rem;
   border-radius: 999px;
   font-size: 0.7rem;
+  font-weight: 600;
   cursor: pointer;
+  transition: all 0.35s ease;
 }
 
 .product-categories button.active {
@@ -548,11 +551,11 @@ body::after {
     0 20px 45px rgba(0,0,0,0.2);
 }
 
-.product-grid {
+.products-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 3rem;
-  text-align: center;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+  justify-items: center;
 }
 
 .product-card img {
@@ -561,24 +564,47 @@ body::after {
 }
 
 .product-card {
-  background: linear-gradient(
-    145deg,
-    #fff3e6,
-    #fff9f5
-  );
-
+  background: linear-gradient(145deg,#fff3e6,#fff9f5);
   border-radius: 24px;
-  padding: 2rem;
+  padding: 1.5rem;
 
   border: 1.5px solid rgba(255,121,0,0.4);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.12);
 
-  box-shadow:
-    0 18px 40px rgba(0,0,0,0.12);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
+  /* ⭐ CONTROL SIZE */
+  width: 100%;
+  max-width: 260px;   /* prevents huge box */
+  aspect-ratio: 1 / 1;
+
+  margin: auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+    text-decoration: none;
+  color: #1f1f1f;
+
 }
+
+/* PRODUCT NAME DESIGN */
+.product-card div:nth-of-type(1) {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-top: 0.8rem;
+  text-align: center;
+
+  background: linear-gradient(90deg, #ff7a00, #ffb066);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  letter-spacing: 0.4px;
+}
+
+
 
 .product-card:hover {
   transform: translateY(-6px);
@@ -675,6 +701,14 @@ body::after {
 .product-categories button:hover {
   background: #000;
   color: #fff;
+  transform: translateY(-2px);
+}
+
+.product-categories button.active {
+  background: linear-gradient(90deg,#ff7a00,#ffb066);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 10px 25px rgba(255,121,0,0.35);
 }
 
 /* CUSTOM SCROLLBAR */
@@ -832,7 +866,24 @@ body::after {
 
   <div class="about-sliders">
 
-    <!-- WHAT'S NEW -->
+    <!-- HIGHLIGHTS -->
+    <div class="highlight-wrapper">
+      <h2 class="highlight-title">Project Exhibition</h2>
+
+      <div class="highlight-slider">
+        <div class="highlight-track">
+          <img src="highlight1.png">
+          <img src="highlight2.png">
+          <img src="highlight3.png">
+          <img src="highlight4.png">
+        </div>
+
+        <button class="highlight-arrow left" onclick="prevHighlight()">‹</button>
+        <button class="highlight-arrow right" onclick="nextHighlight()">›</button>
+      </div>
+    </div>
+
+        <!-- WHAT'S NEW -->
     <div class="news-wrapper">
       <h2 class="news-title">What’s New?</h2>
 
@@ -849,23 +900,6 @@ body::after {
 
         <button class="news-arrow left" onclick="prevNews()">‹</button>
         <button class="news-arrow right" onclick="nextNews()">›</button>
-      </div>
-    </div>
-
-    <!-- HIGHLIGHTS -->
-    <div class="highlight-wrapper">
-      <h2 class="highlight-title">Highlights</h2>
-
-      <div class="highlight-slider">
-        <div class="highlight-track">
-          <img src="highlight1.png">
-          <img src="highlight2.png">
-          <img src="highlight3.png">
-          <img src="highlight4.png">
-        </div>
-
-        <button class="highlight-arrow left" onclick="prevHighlight()">‹</button>
-        <button class="highlight-arrow right" onclick="nextHighlight()">›</button>
       </div>
     </div>
 
@@ -943,111 +977,165 @@ body::after {
 <!-- PRODUCTS -->
     <div class="content" id="products">
 
-      <div class="product-categories">
-        <button class="active" onclick="filterCategory('all',this)">ALL</button>
-        <button onclick="filterCategory('bags',this)">BAGS</button>
-        <button onclick="filterCategory('belt',this)">BELT</button>
-        <button onclick="filterCategory('shoes',this)">SHOES</button>
-        <button onclick="filterCategory('wallet',this)">WALLET</button>
-      </div>
+<div class="product-categories">
+  <button class="active" onclick="filterCategory('womensloafers',this)">Womens Loafers</button>
+  <button onclick="filterCategory('keychain',this)">Shoe Keychain</button>
+  <button onclick="filterCategory('oxford',this)">Oxford</button>
+  <button onclick="filterCategory('mensloafers',this)">Mens Loafers</button>
+  <button onclick="filterCategory('mensslippers',this)">Mens Slippers</button>
+  <button onclick="filterCategory('coinpurse',this)">Coin Purse</button>
+  <button onclick="filterCategory('chukka',this)">Chukka Boots</button>
+</div>
 
-      <div class="product-grid">
-        <div class="product-card bags">
-          <img src="bag1.png">
-          <div>Sling Bag</div>
-          <div class="price">₱ 2,499.00</div>
-        </div>
+<div class="products-grid">
 
-        <div class="product-card bags">
-          <img src="bag2.png">
-          <div>Sling Bag</div>
-          <div class="price">₱ 2,499.00</div>
-        </div>
+  <!-- WOMENS LOAFERS (6) -->
+  <a href="https://vt.tiktok.com/ZS9J2oVDLmqq6-K7mxS/" target="_blank" class="product-card womensloafers">
+    <img src="wloaf1.png">
+    <div>Lara (Off White)</div>
+    <div class="price"></div>
+  </a>
 
-        <div class="product-card bags">
-          <img src="bag3.png">
-          <div>Sling Bag</div>
-          <div class="price">₱ 2,499.00</div>
-        </div>
+  <a href="https://vt.tiktok.com/ZS9J2oGvb5466-Ef2CM" target="_blank" class="product-card womensloafers">
+    <img src="wloaf2.png">
+    <div>Lira (Red Orange)</div>
+    <div class="price"></div>
+  </a>
 
-        <div class="product-card bags">
-          <img src="bag4.png">
-          <div>Sling Bag</div>
-          <div class="price">₱ 2,499.00</div>
-        </div>
+  <a href="https://vt.tiktok.com/ZS9J2ocH7fopf-tboom/" target="_blank" class="product-card womensloafers">
+    <img src="wloaf3.png">
+    <div>Lisa (Tan / Burn Orange)</div>
+    <div class="price"></div>
+  </a>
 
-        <div class="product-card belt">
-          <img src="belt1.png">
-          <div>Leather Belt</div>
-          <div class="price">₱ 1,299.00</div>
-        </div>
+  <a href="https://vt.tiktok.com/ZS9J2oDY3VKm9-mQsKp/" target="_blank" class="product-card womensloafers">
+    <img src="wloaf4.png">
+    <div>Luci (Brown)</div>
+    <div class="price"></div>
+  </a>
 
-        <div class="product-card belt">
-          <img src="belt2.png">
-          <div>Leather Belt</div>
-          <div class="price">₱ 1,299.00</div>
-        </div>
+  <a href="https://vt.tiktok.com/ZS9J2oGR1JuWw-0pXMM/" target="_blank" class="product-card womensloafers">
+    <img src="wloaf5.png">
+    <div>Lufe (Yellow)</div>
+    <div class="price"></div>
+  </a>
 
-        <div class="product-card belt">
-          <img src="belt3.png">
-          <div>Leather Belt</div>
-          <div class="price">₱ 1,299.00</div>
-        </div>
+  <a href="https://vt.tiktok.com/ZS9J2owETHHg7-im8w0/" target="_blank" class="product-card womensloafers">
+    <img src="wloaf6.png">
+    <div>Rose (Tan)</div>
+    <div class="price"></div>
+  </a>
 
-        <div class="product-card belt">
-          <img src="belt4.png">
-          <div>Leather Belt</div>
-          <div class="price">₱ 1,299.00</div>
-        </div>
 
-        <div class="product-card shoes">
-          <img src="shoes1.png">
-          <div>Leather Shoes</div>
-          <div class="price">₱ 3,999.00</div>
-        </div>
+  <!-- SHOE KEYCHAIN (1) -->
+  <a href="https://vt.tiktok.com/ZS9Jj11WTQXKU-4NKkP/" target="_blank" class="product-card keychain">
+    <img src="keychain1.png">
+    <div>Shoe Keychain (Assorted)</div>
+    <div class="price"></div>
+  </a>
 
-        <div class="product-card shoes">
-          <img src="shoes2.png">
-          <div>Leather Shoes</div>
-          <div class="price">₱ 3,999.00</div>
-        </div>
 
-        <div class="product-card shoes">
-          <img src="shoes3.png">
-          <div>Leather Shoes</div>
-          <div class="price">₱ 3,999.00</div>
-        </div>
+  <!-- OXFORD (3) -->
+  <a href="https://vt.tiktok.com/ZS9Jj1Lg32gMV-9u5wk/" target="_blank" class="product-card oxford">
+    <img src="oxford1.png">
+    <div>Oscar (Black)</div>
+    <div class="price"></div>
+  </a>
 
-        <div class="product-card shoes">
-          <img src="shoes4.png">
-          <div>Leather Shoes</div>
-          <div class="price">₱ 3,999.00</div>
-        </div>
+  <a href="https://vt.tiktok.com/ZS9Jj1LKBUT9L-LeUU9/" target="_blank" class="product-card oxford">
+    <img src="oxford2.png">
+    <div>Oman (Burgundy)</div>
+    <div class="price"></div>
+  </a>
 
-        <div class="product-card wallet">
-          <img src="wallet1.png">
-          <div>Wallet</div>
-          <div class="price">₱ 999.00</div>
-        </div>
+  <a href="https://vt.tiktok.com/ZS9Jj12PNHNGd-enYW6/" target="_blank" class="product-card oxford">
+    <img src="oxford3.png">
+    <div>Oliver (Black)</div>
+    <div class="price"></div>
+  </a>
 
-        <div class="product-card wallet">
-          <img src="wallet2.png">
-          <div>Wallet</div>
-          <div class="price">₱ 999.00</div>
-        </div>
 
-        <div class="product-card wallet">
-          <img src="wallet3.png">
-          <div>Wallet</div>
-          <div class="price">₱ 999.00</div>
-        </div>
+  <!-- MENS LOAFERS (2) -->
+  <a href="https://vt.tiktok.com/ZS9Jj1NKGSv7P-R5dXy/" target="_blank" class="product-card mensloafers">
+    <img src="mloafer1.png">
+    <div>Lucas (Brown)</div>
+    <div class="price"></div>
+  </a>
 
-        <div class="product-card wallet">
-          <img src="wallet4.png">
-          <div>Wallet</div>
-          <div class="price">₱ 999.00</div>
-        </div>
-      </div>
+  <a href="https://vt.tiktok.com/ZS9Jj1mF1f549-FIVRb/" target="_blank" class="product-card mensloafers">
+    <img src="mloafer2.png">
+    <div>Plain Driving Shoes (Black)</div>
+    <div class="price"></div>
+  </a>
+
+
+  <!-- MENS SLIPPERS (5) -->
+  <a href="https://vt.tiktok.com/ZS9JjNbhpPMtS-bUzxD/" target="_blank" class="product-card mensslippers">
+    <img src="slip1.png">
+    <div>601 (Black, Brown, Tan)</div>
+    <div class="price"></div>
+  </a>
+
+  <a href="https://vt.tiktok.com/ZS9JjNXDkGrCr-2FCKZ/" target="_blank" class="product-card mensslippers">
+    <img src="slip2.png">
+    <div>403 (Black, Brown, Tan)</div>
+    <div class="price"></div>
+  </a>
+
+  <a href="https://vt.tiktok.com/ZS9JjNShp1heA-y5Baa/" target="_blank" class="product-card mensslippers">
+    <img src="slip3.png">
+    <div>510 (Black, Brown, Tan)</div>
+    <div class="price"></div>
+  </a>
+
+  <a href="https://vt.tiktok.com/ZS9JjNxARrG4L-RyTkf/" target="_blank" class="product-card mensslippers">
+    <img src="slip4.png">
+    <div>522 (Black, Brown, Tan)</div>
+    <div class="price"></div>
+  </a>
+
+  <a href="https://vt.tiktok.com/ZS9JjN2RcdPSX-c1Ccv/" target="_blank" class="product-card mensslippers">
+    <img src="slip5.png">
+    <div>526 (Black, Brown, Tan)</div>
+    <div class="price"></div>
+  </a>
+
+
+  <!-- COIN PURSE (1) -->
+  <a href="https://vt.tiktok.com/ZS9Jj1DUfcJew-Ymica/" target="_blank" class="product-card coinpurse">
+    <img src="coin1.png">
+    <div>Shoe Coin Purse (Assorted)</div>
+    <div class="price"></div>
+  </a>
+
+
+  <!-- CHUKKA BOOTS (4) -->
+  <a href="https://vt.tiktok.com/ZS9Jj1m1YxT13-CbYeh/" target="_blank" class="product-card chukka">
+    <img src="chukka1.png">
+    <div>Cedie High Cut (Tan)</div>
+    <div class="price"></div>
+  </a>
+
+  <a href="https://vt.tiktok.com/ZS9Jj1HFhay4x-pzAoN/" target="_blank" class="product-card chukka">
+    <img src="chukka2.png">
+    <div>Chevy Mid Cut (Tan)</div>
+    <div class="price"></div>
+  </a>
+
+  <a href="https://vt.tiktok.com/ZS9Jj1HFhay4x-pzAoN/" target="_blank" class="product-card chukka">
+    <img src="chukka3.png">
+    <div>Chevy Mid Cut (Light Tan)</div>
+    <div class="price"></div>
+  </a>
+
+  <a href="https://vt.tiktok.com/ZS9Jj1HFhay4x-pzAoN/" target="_blank" class="product-card chukka">
+    <img src="chukka4.png">
+    <div>Chevy Mid Cut (Brown)</div>
+    <div class="price"></div>
+  </a>
+
+</div>
+
 
       <div class="pagination">
         <button class="page-arrow" onclick="prevCategory()">←</button>
@@ -1160,47 +1248,137 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 function showTab(tab, btn) {
+  // Hide all content sections
   document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
   document.getElementById(tab).classList.add('active');
 
+  // Update nav buttons
   document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
 
+  // Toggle products-view class for panel
   document.querySelector('.panel')
     .classList.toggle('products-view', tab === 'products');
+
+  // If products tab, filter to womensloafers by default
+  if (tab === 'products') {
+    filterCategory('womensloafers', document.querySelector('.product-categories button.active'));
+  }
 }
 
-const categories = ['all','bags','belt','shoes','wallet'];
-let currentCategoryIndex = 0;
 
-function filterCategory(category, btn=null) {
+
+
+let currentCategoryIndex = 0;
+const categories = [
+  'womensloafers',
+  'keychain',
+  'oxford',
+  'mensloafers',
+  'mensslippers',
+  'coinpurse',
+  'chukka'
+];
+
+function filterCategory(category, btn = null) {
   currentCategoryIndex = categories.indexOf(category);
 
   const buttons = document.querySelectorAll('.product-categories button');
   buttons.forEach(b => b.classList.remove('active'));
-
   if (btn) buttons[currentCategoryIndex].classList.add('active');
 
-  document.querySelectorAll('.product-card').forEach(card => {
-    card.style.display =
-      category === 'all' || card.classList.contains(category)
-        ? 'block'
-        : 'none';
+  const allCards = document.querySelectorAll('.product-card');
+
+  // Start fade-out
+  allCards.forEach(card => {
+    card.style.transition = 'opacity 0.3s ease';
+    card.style.opacity = '0';
   });
+
+  // After fade-out, change display and fade-in
+  setTimeout(() => {
+    allCards.forEach(card => {
+      const show = card.classList.contains(category);
+      card.style.display = show ? 'block' : 'none';
+    });
+
+    // Fade-in visible cards
+    allCards.forEach(card => {
+      if (card.style.display !== 'none') {
+        card.style.opacity = '0';
+        setTimeout(() => {
+          card.style.transition = 'opacity 0.5s ease';
+          card.style.opacity = '1';
+        }, 50);
+      }
+    });
+  }, 300);
 }
 
 function nextCategory() {
   currentCategoryIndex = (currentCategoryIndex + 1) % categories.length;
-  filterCategory(categories[currentCategoryIndex]);
+  const nextCat = categories[currentCategoryIndex];
+  filterCategory(nextCat, document.querySelectorAll('.product-categories button')[currentCategoryIndex]);
 }
 
 function prevCategory() {
   currentCategoryIndex =
     (currentCategoryIndex - 1 + categories.length) % categories.length;
-  filterCategory(categories[currentCategoryIndex]);
+  const prevCat = categories[currentCategoryIndex];
+  filterCategory(prevCat, document.querySelectorAll('.product-categories button')[currentCategoryIndex]);
 }
 
-filterCategory('all');
+// Initialize default category
+filterCategory('womensloafers', document.querySelector('.product-categories button.active'));
+
+// PAGINATION SETUP
+const productsPerPage = 6; // number of products per page
+let currentPage = 1;
+
+function updatePagination() {
+  const allProducts = document.querySelectorAll('.products-grid .product-card');
+  const totalPages = Math.ceil(allProducts.length / productsPerPage);
+
+  // Hide all products first
+  allProducts.forEach(p => (p.style.display = 'none'));
+
+  // Show only products of the current page
+  const start = (currentPage - 1) * productsPerPage;
+  const end = start + productsPerPage;
+  const currentProducts = [...allProducts].slice(start, end);
+
+  currentProducts.forEach(p => {
+    p.style.display = 'flex';
+    p.style.opacity = '0';
+    p.style.transform = 'translateY(20px)';
+    p.style.transition = 'all 0.4s ease';
+    setTimeout(() => {
+      p.style.opacity = '1';
+      p.style.transform = 'translateY(0)';
+    }, 50);
+  });
+
+  // Update page buttons (optional, can show dots or numbers later)
+}
+
+// Go to next page
+function nextCategory() {
+  const allProducts = document.querySelectorAll('.products-grid .product-card');
+  const totalPages = Math.ceil(allProducts.length / productsPerPage);
+  currentPage = currentPage < totalPages ? currentPage + 1 : 1;
+  updatePagination();
+}
+
+// Go to previous page
+function prevCategory() {
+  const allProducts = document.querySelectorAll('.products-grid .product-card');
+  const totalPages = Math.ceil(allProducts.length / productsPerPage);
+  currentPage = currentPage > 1 ? currentPage - 1 : totalPages;
+  updatePagination();
+}
+
+// Initialize first page
+document.addEventListener('DOMContentLoaded', updatePagination);
 </script>
 
 
