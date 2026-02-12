@@ -7,6 +7,7 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
 :root {
@@ -15,30 +16,6 @@
   --orange-deep: #e66c00;
   --dark: #1f1f1f;
   --glass: rgba(255,255,255,0.7);
-}
-
-/* ORANGE LUXURY ACCENT */
-.glow-orange {
-  position: relative;
-  background: linear-gradient(145deg, #ffffff, #fff5ec);
-  border-radius: inherit;
-  z-index: 1;
-}
-
-.glow-orange::before {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  border-radius: inherit;
-  background: linear-gradient(
-    135deg,
-    #ff7900,
-    #ffb067,
-    #ff7900
-  );
-  z-index: -1;
-  filter: blur(6px);
-  opacity: 0.55;
 }
 
 * {
@@ -50,70 +27,20 @@
 
 /* BODY & SCROLL */
 body {
-  background:
-    radial-gradient(circle at top, #ff9b3d 0%, transparent 45%),
-    linear-gradient(180deg, #FF7900, #e66c00);
+  background: #f7be8f;
   min-height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;
 }
-/* CUSTOM SCROLLBAR */
-::-webkit-scrollbar {
-  width: 10px;
-}
 
-::-webkit-scrollbar-track {
-  background: rgba(0,0,0,0.05);
-  border-radius: 999px;
-}
+/* CUSTOM SCROLLBARS */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); border-radius: 999px; }
+::-webkit-scrollbar-thumb { background: linear-gradient(180deg,#000,#3a3a3a); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: #000; }
+* { scrollbar-width: thin; scrollbar-color: #000 rgba(0,0,0,0.05); }
 
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg,#000,#3a3a3a);
-  border-radius: 999px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #000;
-}
-
-/* Firefox scrollbar */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: #000 rgba(0,0,0,0.05);
-}
-
-/* SCROLLABLE PRODUCTS AREA */
-#products {
-  max-height: calc(100vh - 260px);
-  overflow-y: auto;
-  padding-right: 0.8rem;
-}
-
-/* SOFT FLOATING LIGHTS */
-body::before, body::after {
-  content: "";
-  position: fixed;
-  width: 480px;
-  height: 480px;
-  border-radius: 50%;
-  filter: blur(120px);
-  opacity: 0.35;
-  z-index: -1;
-}
-
-body::before {
-  background: rgba(255,255,255,0.9);
-  top: -120px;
-  left: -120px;
-}
-
-body::after {
-  background: rgba(255, 180, 100, 0.9);
-  bottom: -120px;
-  right: -120px;
-}
-
-/* MAIN WRAPPER */
+/* LAYOUT WRAPPERS */
 .wrapper {
   width: 100%;
   height: 100vh;
@@ -141,11 +68,19 @@ body::after {
   transition: all 0.35s ease;
 }
 
-.nav button.active,
 .nav button:hover {
   background: var(--orange);
   border-color: var(--orange);
   color: #fff;
+  transform: translateY(-2px);
+}
+
+.nav button.active{
+  border: 2px solid #000;
+  border-radius: 999px;
+  background: var(--orange);
+  color: #fff;
+  transform: translateY(-2px);
 }
 
 /* GLASS PANEL */
@@ -158,41 +93,10 @@ body::after {
   gap: 4rem;
   align-items: center;
   border-radius: 34px;
-
-  /* warm white with orange DNA */
-  background: linear-gradient(
-    180deg,
-    #fff3e6,
-    #fff8f3
-  );
-
-  /* confident orange frame */
+  background: linear-gradient(180deg, #fff3e6, #fff8f3);
   border: 2px solid rgba(255, 121, 0, 0.45);
-
-  box-shadow:
-    0 40px 90px rgba(0,0,0,0.18);
-
+  box-shadow: 0 40px 90px rgba(0,0,0,0.18);
   animation: panelIn 0.9s ease;
-}
-
-.panel::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 34px;
-  background: linear-gradient(145deg, #ffffff, #fff3e6);
-  z-index: -1;
-}
-
-.panel::after {
-  content: "";
-  position: absolute;
-  inset: -3px;
-  border-radius: 36px;
-  background: linear-gradient(135deg, #ff7900, #ffb067);
-  z-index: -2;
-  filter: blur(12px);
-  opacity: 0.45;
 }
 
 @keyframes panelIn {
@@ -200,33 +104,16 @@ body::after {
   to { opacity: 1; transform: scale(1); }
 }
 
+/* BRAND LOGO AREA */
 .brand-box {
-  background: linear-gradient(
-    145deg,
-    #fff6ee,
-    #fffaf7
-  );
-
+  background: linear-gradient(145deg, #fff6ee, #fffaf7);
   border-radius: 30px;
   padding: 4rem;
-
   border: 1.5px solid rgba(255,121,0,0.35);
-
-  box-shadow:
-    0 22px 55px rgba(0,0,0,0.12);
-
+  box-shadow: 0 22px 55px rgba(0,0,0,0.12);
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.brand-box::after {
-  content: "";
-  position: absolute;
-  inset: -8px;
-  border-radius: 36px;
-  background: radial-gradient(circle, rgba(255,121,0,0.35), transparent 70%);
-  z-index: -1;
 }
 
 .brand-box img {
@@ -240,104 +127,16 @@ body::after {
   50% { transform: translateY(-12px); }
 }
 
-/* RIGHT CONTENT */
-.content {
-  display: none;
-}
-
-.content.active {
-  display: grid;
-  gap: 1.8rem;
-  animation: fadeSlide 0.6s ease;
-}
+/* CONTENT TABS */
+.content { display: none; }
+.content.active { display: grid; gap: 1.8rem; animation: fadeSlide 0.6s ease; }
 
 @keyframes fadeSlide {
   from { opacity: 0; transform: translateX(25px); }
   to { opacity: 1; transform: translateX(0); }
 }
 
-.news-wrapper {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.news-title {
-  font-size: 26px;
-  font-weight: 700;
-  margin-bottom: 18px;
-  background: linear-gradient(90deg, #ff7a00, #ffb066);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-align: center;
-  position: relative;
-}
-
-.news-title::after {
-  content: "";
-  display: block;
-  width: 70px;
-  height: 4px;
-  margin: 10px auto 0;
-  background: linear-gradient(90deg, #ff7a00, #ffb066);
-  border-radius: 10px;
-}
-
-/* SLIDER */
-.news-slider {
-  position: relative;
-  width: 520px;        /* matches nicely with logo size */
-  height: 640px;       /* 🔥 MAKES IT LONGER */
-  margin: 0 auto;
-  background: #fff7f0;
-  border-radius: 22px;
-  border: 2px solid rgba(255, 140, 0, 0.35);
-  box-shadow: 0 18px 40px rgba(0,0,0,0.15);
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.news-track {
-  display: flex;
-  height: 100%;
-  transition: transform 0.6s ease-in-out;
-}
-
-.news-track img {
-  min-width: 100%;
-  height: 100%;
-  object-fit: contain;   /* 🔥 shows whole poster */
-  padding: 12px;
-  border-radius: 16px;
-}
-
-.news-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(0,0,0,0.55);
-  color: #fff;
-  border: none;
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  font-size: 1.7rem;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.news-arrow:hover {
-  background: #FF7900;
-}
-
-.news-arrow.left { left: 16px; }
-.news-arrow.right { right: 16px; }
-
-/* highlights sliders*/
-
+/* SLIDERS (ABOUT SECTION) */
 .about-sliders {
   display: flex;
   gap: 40px;
@@ -346,53 +145,23 @@ body::after {
   margin-top: 40px;
 }
 
-.highlight-slider {
+.highlight-wrapper, .news-wrapper { flex: 1; display: flex; flex-direction: column; align-items: center; }
+
+.news-slider, .highlight-slider {
+  position: relative;
   width: 520px;
-  height: 640px;   /* same height = perfectly aligned */
+  height: 640px;
   background: #fff7f0;
   border-radius: 22px;
-  border: 2px solid rgba(255,140,0,0.35);
+  border: 2px solid rgba(255, 140, 0, 0.35);
   box-shadow: 0 18px 40px rgba(0,0,0,0.15);
   overflow: hidden;
-  position: relative;
 }
 
-.highlight-track {
-  display: flex;
-  height: 100%;
-  transition: transform 0.6s ease;
-}
+.news-track, .highlight-track { display: flex; height: 100%; transition: transform 0.6s ease-in-out; }
+.news-track img, .highlight-track img { min-width: 100%; height: 100%; object-fit: contain; padding: 12px; border-radius: 16px; }
 
-.highlight-track img {
-  min-width: 100%;
-  height: 100%;
-  object-fit: contain;   /* PERFECT for ads */
-  padding: 14px;
-  border-radius: 18px;
-}
-
-
-.highlight-title {
-  font-size: 26px;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 18px;
-  background: linear-gradient(90deg, #ff7a00, #ffb066);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.highlight-title::after {
-  content: "";
-  display: block;
-  width: 60px;
-  height: 4px;
-  margin: 10px auto 0;
-  background: linear-gradient(90deg, #ff7a00, #ffb066);
-  border-radius: 10px;
-}
-
-.highlight-arrow {
+.news-arrow, .highlight-arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -404,56 +173,31 @@ body::after {
   border-radius: 50%;
   font-size: 1.7rem;
   cursor: pointer;
-  transition: background 0.3s ease;
+  z-index: 10;
 }
 
-.highlight-arrow:hover {
-  background: #FF7900;
-}
+.news-arrow:hover, .highlight-arrow:hover { background: var(--orange); }
+.left { left: 12px; }
+.right { right: 12px; }
 
-
-.highlight-arrow.left { left: 12px; }
-.highlight-arrow.right { right: 12px; }
-
-
-
-/* ===== LUXURY CONTACT SECTION ===== */
-
-.contact-luxury {
-  width: 100%;
-  animation: fadeSlide 0.6s ease;
-}
-
-.contact-title {
-  font-size: 30px;
+.news-title, .highlight-title {
+  font-size: 26px;
   font-weight: 700;
-  text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 18px;
   background: linear-gradient(90deg, #ff7a00, #ffb066);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  text-align: center;
 }
 
-.contact-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2.5rem;
-}
-
+/* CONTACT SECTION */
+.contact-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.5rem; }
 .contact-card {
   background: linear-gradient(145deg, #ffffff, #fff3e7);
   border-radius: 28px;
   padding: 2.5rem;
   border: 1.5px solid rgba(255,121,0,0.35);
-  box-shadow:
-    0 22px 50px rgba(0,0,0,0.12);
-}
-
-.contact-card h3 {
-  font-size: 1rem;
-  letter-spacing: 2px;
-  margin-bottom: 2rem;
-  color: #000;
+  box-shadow: 0 22px 50px rgba(0,0,0,0.12);
 }
 
 .contact-item {
@@ -466,378 +210,119 @@ body::after {
   margin-bottom: 1rem;
   background: linear-gradient(145deg, #fff7f2, #fffdfb);
   transition: all 0.35s ease;
-}
-
-.contact-item i {
-  font-size: 1.2rem;
-  color: #FF7900;
-  min-width: 22px;
-}
-
-.contact-item:hover {
-  transform: translateY(-6px);
-  box-shadow:
-    0 20px 45px rgba(255,121,0,0.35),
-    0 12px 28px rgba(0,0,0,0.18);
-}
-
-/* Links clean */
-.contact-item {
   text-decoration: none;
   color: #000;
 }
+.contact-item:hover { transform: translateY(-6px); box-shadow: 0 15px 30px rgba(255,121,0,0.2); }
+.contact-item i { color: var(--orange); font-size: 1.2rem; }
 
-
-
-/* PRODUCTS */
-.products {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
+/* PRODUCTS SECTION */
+#products {
+  max-height: calc(100vh - 260px);
+  overflow-y: auto;
+  padding: 0 2rem;
 }
+.panel.products-view { grid-template-columns: 1fr; }
+.panel.products-view .brand-box { display: flex; }
 
-.product {
-  background: linear-gradient(145deg, #ffffff, #f3eee9);
-  border-radius: 24px;
-  padding: 2rem;
-  height: 140px;
-  box-shadow: 0 20px 45px rgba(0,0,0,0.1);
-}
-
-
-
-
-/* PRODUCTS FULL WIDTH MODE */
-.panel.products-view {
-  grid-template-columns: 1fr;
-}
-
-/* HIDE LOGO IN PRODUCTS */
-.panel.products-view .brand-box {
-  display: none;
-}
-
-/* PRODUCT LAYOUT (REFERENCE STYLE) */
-.product-categories {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-bottom: 3rem;
-}
-
+.product-categories { display: flex; justify-content: center; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap; }
 .product-categories button {
   border: 1.5px solid rgba(0,0,0,0.8);
   background: rgba(255,255,255,0.6);
-  backdrop-filter: blur(6px);
   padding: 0.5rem 1.6rem;
   border-radius: 999px;
   font-size: 0.7rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.35s ease;
 }
-
-.product-categories button.active {
-  background: var(--orange);
-  border-color: var(--orange);
-  color: #fff;
-}
-
-.social:hover,
-.product-card:hover {
-  transform: translateY(-8px);
-  box-shadow:
-    0 30px 70px rgba(255,121,0,0.4),
-    0 20px 45px rgba(0,0,0,0.2);
-}
+.product-categories button.active { background: linear-gradient(90deg,#ff7a00,#ffb066); border-color: transparent; color: #fff; }
 
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, 260px);
   gap: 2rem;
-  justify-items: center;
-}
-
-.product-card img {
-  max-width: 180px;
+  justify-content: center; 
+  
   width: 100%;
 }
 
 .product-card {
-  background: linear-gradient(145deg,#fff3e6,#fff9f5);
+  background: rgba(255, 255, 255, 0.7); 
+  
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  
   border-radius: 24px;
   padding: 1.5rem;
-
-  border: 1.5px solid rgba(255,121,0,0.4);
-  box-shadow: 0 18px 40px rgba(0,0,0,0.12);
-
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-  /* ⭐ CONTROL SIZE */
+  
+  border: 1px solid rgba(255, 255, 255, 0.2); 
+  
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   width: 100%;
-  max-width: 260px;   /* prevents huge box */
-  aspect-ratio: 1 / 1;
-
-  margin: auto;
-
+  max-width: 260px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-
-    text-decoration: none;
-  color: #1f1f1f;
-
+  text-decoration: none;
+  
+  color: #ffffff; 
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
 }
-
-/* PRODUCT NAME DESIGN */
-.product-card div:nth-of-type(1) {
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-top: 0.8rem;
-  text-align: center;
-
-  background: linear-gradient(90deg, #ff7a00, #ffb066);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-
-  letter-spacing: 0.4px;
-}
-
-
 
 .product-card:hover {
-  transform: translateY(-6px);
-  box-shadow:
-    0 28px 65px rgba(255,121,0,0.35),
-    0 20px 45px rgba(0,0,0,0.18);
+  transform: translateY(-12px) scale(1.05);
+  background: rgba(255, 255, 255, 0.25);
+  border-color: var(--orange);
+  box-shadow: 0 25px 50px rgba(255, 121, 0, 0.3);
 }
 
-.price {
-  font-size: 0.75rem;
-  font-weight: 600;
-  margin-top: 0.2rem;
-}
-
-.pagination {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 3rem;
-}
-
-.page-arrow {
-  border: 2px solid #000;
-  background: transparent;
-  padding: 0.4rem 0.8rem;
-  cursor: pointer;
-}
-
-/* PRODUCT HOVER (LUXURY ZOOM) */
 .product-card img {
+  max-width: 100%;
+  height: auto;
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
   transition: transform 0.4s ease;
 }
 
-.product-card:hover img {
-  transform: scale(1.08);
-}
+.product-card:hover img { transform: scale(1.08); }
 
-.price {
-  font-size: 0.75rem;
+.product-card div {
+  margin-top: 1rem;
   font-weight: 600;
-  margin-top: 0.2rem;
+  font-size: 0.9rem;
+  text-align: center;
+  letter-spacing: 1px;
 }
-
-.pagination {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 3rem;
-}
-
-.page-arrow {
-  border: 2px solid #000;
-  background: transparent;
-  padding: 0.4rem 0.8rem;
-  cursor: pointer;
 
 /* PAGINATION */
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 3rem;
-}
-
-.page-btn {
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  border: 2px solid #000;
-  background: transparent;
-  font-size: 0.75rem;
-  cursor: pointer;
-}
-
-.page-btn.active {
-  background: #000;
-  color: #fff;
-}
-
+.pagination { display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 3rem; }
 .page-arrow {
   border: 2px solid #000;
   background: transparent;
   padding: 0.4rem 0.8rem;
   border-radius: 999px;
   cursor: pointer;
+  transition: 0.3s;
 }
+.page-arrow:hover { background: #000; color: #fff; }
 
-/* CATEGORY ACTIVE STATE */
-.product-categories button {
-  transition: all 0.3s ease;
-}
-
-.product-categories button:hover {
-  background: #000;
-  color: #fff;
-  transform: translateY(-2px);
-}
-
-.product-categories button.active {
-  background: linear-gradient(90deg,#ff7a00,#ffb066);
-  border-color: transparent;
-  color: #fff;
-  box-shadow: 0 10px 25px rgba(255,121,0,0.35);
-}
-
-/* CUSTOM SCROLLBAR */
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgba(0,0,0,0.05);
-  border-radius: 999px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(
-    180deg,
-    #000000,
-    #3a3a3a
-  );
-  border-radius: 999px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #000;
-}
-
-/* Firefox */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: #000 rgba(0,0,0,0.05);
-}
-
-
-/* ===============================
-   MOBILE & TABLET FASHION MODE
-   =============================== */
-
-/* Tablets & below */
+/* RESPONSIVE */
 @media (max-width: 1024px) {
-
-  .about-sliders {
-    flex-direction: column;
-    align-items: center;
-    gap: 3rem;
-    margin-top: 1.5rem;
-  }
-
-  .news-slider,
-  .highlight-slider {
-    width: 100%;
-    max-width: 520px;
-  }
-
-  .news-slider {
-    height: 520px;
-  }
-
-  .highlight-slider {
-    height: 360px;
-  }
+  .panel { grid-template-columns: 1fr; padding: 2.5rem; }
+  .about-sliders { flex-direction: column; align-items: center; }
+  .news-slider, .highlight-slider { width: 100%; max-width: 520px; height: 450px; }
 }
-
-
-/* Phones */
 @media (max-width: 768px) {
-
-  .wrapper {
-    padding: 1rem;
-  }
-
-  .nav {
-    gap: 0.8rem;
-    flex-wrap: wrap;
-  }
-
-  .nav button {
-    padding: 0.55rem 1.2rem;
-    font-size: 0.65rem;
-    letter-spacing: 1.5px;
-  }
-
-  .panel {
-    padding: 1.6rem;
-    border-radius: 26px;
-  }
-
-  .brand-box {
-    padding: 2rem;
-  }
-
-  .brand-box img {
-    max-width: 260px;
-    animation: none; /* calmer on mobile */
-  }
-
-  .news-title,
-  .highlight-title {
-    font-size: 22px;
-  }
+  .contact-grid { grid-template-columns: 1fr; }
+  .nav { gap: 0.5rem; }
 }
 
-
-@media (max-width: 480px) {
-
-  .news-slider {
-    height: 420px;
-  }
-
-  .highlight-slider {
-    height: 300px;
-  }
-
-  .news-arrow,
-  .highlight-arrow {
-    width: 38px;
-    height: 38px;
-    font-size: 1.3rem;
-  }
-
-  .news-track img,
-  .highlight-track img {
-    padding: 8px;
-  }
+.panel {
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+              url('shoesbg.jpg');
+  background-size: cover;
+  background-position: center;
+  color: white;
 }
-
-
-
-
-
-
 </style>
 </head>
 
@@ -856,293 +341,294 @@ body::after {
   <div class="panel">
 
     <!-- LEFT -->
-    <div class="brand-box">
+    <div class="brand-box d-none">
       <!-- 🔁 CHANGE THIS IMAGE PER BRAND -->
       <img src="brand1.png" alt="Brand Logo">
     </div>
 
     <!-- ABOUT -->
-<div class="content active" id="about">
+    <div class="content active" id="about">
 
-  <div class="about-sliders">
+      <div class="about-sliders">
 
-    <!-- HIGHLIGHTS -->
-    <div class="highlight-wrapper">
-      <h2 class="highlight-title">Project Exhibition</h2>
+        <!-- HIGHLIGHTS -->
+        <div class="highlight-wrapper">
+          <h2 class="highlight-title">Project Exhibition</h2>
 
-      <div class="highlight-slider">
-        <div class="highlight-track">
-          <img src="highlight1.png">
-          <img src="highlight2.png">
-          <img src="highlight3.png">
-          <img src="highlight4.png">
+          <div class="highlight-slider">
+            <div class="highlight-track">
+              <img src="highlight1.png">
+              <img src="highlight2.png">
+              <img src="highlight3.png">
+              <img src="highlight4.png">
+              <img src="highlight1.png">
+            </div>
+
+            <button class="highlight-arrow left" onclick="prevHighlight()">‹</button>
+            <button class="highlight-arrow right" onclick="nextHighlight()">›</button>
+          </div>
         </div>
 
-        <button class="highlight-arrow left" onclick="prevHighlight()">‹</button>
-        <button class="highlight-arrow right" onclick="nextHighlight()">›</button>
-      </div>
-    </div>
+            <!-- WHAT'S NEW -->
+        <div class="news-wrapper">
+          <h2 class="news-title">What’s New?</h2>
 
-        <!-- WHAT'S NEW -->
-    <div class="news-wrapper">
-      <h2 class="news-title">What’s New?</h2>
+          <div class="news-slider">
+            <div class="news-track">
+              <img src="news1.png">
+              <img src="news2.png">
+              <img src="news3.png">
+              <img src="news4.png">
+              <img src="news5.png">
+              <img src="news6.png">
+              <img src="news7.png">
+              <img src="news1.png">
+            </div>
 
-      <div class="news-slider">
-        <div class="news-track">
-          <img src="news1.png">
-          <img src="news2.png">
-          <img src="news3.png">
-          <img src="news4.png">
-          <img src="news5.png">
-          <img src="news6.png">
-          <img src="news7.png">
+            <button class="news-arrow left" onclick="prevNews()">‹</button>
+            <button class="news-arrow right" onclick="nextNews()">›</button>
+          </div>
         </div>
 
-        <button class="news-arrow left" onclick="prevNews()">‹</button>
-        <button class="news-arrow right" onclick="nextNews()">›</button>
       </div>
+
     </div>
-
-  </div>
-
-</div>
 
     <!-- CONTACT -->
 
     <div class="content" id="contact">
 
-<div class="contact-luxury">
+      <div class="contact-luxury">
 
-  <h2 class="contact-title">Connect with Ely Knows</h2>
+        <h2 class="contact-title">Connect with Ely Knows</h2>
 
-  <div class="contact-grid">
+        <div class="contact-grid">
 
-    <!-- SOCIAL ACCOUNTS -->
-    <div class="contact-card">
-      <h3>Social Presence</h3>
+          <!-- SOCIAL ACCOUNTS -->
+          <div class="contact-card">
+            <h4 style="color: black;"><b>Social Presence</b></h4>
 
-      <a href="https://www.facebook.com/elyknowsshoes" target="_blank" class="contact-item">
-        <i class="fab fa-facebook"></i>
-        <span>Facebook — Ely Knows</span>
-      </a>
+            <a href="https://www.facebook.com/elyknowsshoes" target="_blank" class="contact-item">
+              <i class="fab fa-facebook"></i>
+              <span>Facebook — Ely Knows</span>
+            </a>
 
-      <a href="https://www.instagram.com/elyknowsshoes" target="_blank" class="contact-item">
-        <i class="fab fa-instagram"></i>
-        <span>Instagram — Ely Knows PH</span>
-      </a>
+            <a href="https://www.instagram.com/elyknowsshoes" target="_blank" class="contact-item">
+              <i class="fab fa-instagram"></i>
+              <span>Instagram — Ely Knows PH</span>
+            </a>
 
-      <a href="https://www.tiktok.com/@elyknowsshoes?_r=1&_t=ZS-93PomYANcBg" target="_blank" class="contact-item">
-        <i class="fab fa-tiktok"></i>
-        <span>TikTok — ElyKnows Shoes</span>
-      </a>
+            <a href="https://www.tiktok.com/@elyknowsshoes?_r=1&_t=ZS-93PomYANcBg" target="_blank" class="contact-item">
+              <i class="fab fa-tiktok"></i>
+              <span>TikTok — ElyKnows Shoes</span>
+            </a>
 
-      <div class="contact-item">
-        <i class="fa-solid fa-store"></i>
-        <span>Shopee — ElyknowsMarikina</span>
+            <div class="contact-item">
+              <i class="fa-solid fa-store"></i>
+              <span>Shopee — ElyknowsMarikina</span>
+            </div>
+          </div>
+
+          <!-- BUSINESS DETAILS -->
+          <div class="contact-card">
+            <h3 style="color: black;"><b>Business Information</b></h3>
+
+            <div class="contact-item">
+              <i class="fa-solid fa-calendar"></i>
+              <span>Established — 2012</span>
+            </div>
+
+            <div class="contact-item">
+              <i class="fa-solid fa-location-dot"></i>
+              <span>
+                321 E Delapaz St.<br>
+                Sto. Niño, Marikina City
+              </span>
+            </div>
+
+            <div class="contact-item">
+              <i class="fa-solid fa-phone"></i>
+              <span>0967-137-2243</span>
+            </div>
+
+            <div class="contact-item">
+              <i class="fa-solid fa-envelope"></i>
+              <span>elyknowsenterprisesph@gmail.com</span>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
 
-    <!-- BUSINESS DETAILS -->
-    <div class="contact-card">
-      <h3>Business Information</h3>
-
-      <div class="contact-item">
-        <i class="fa-solid fa-calendar"></i>
-        <span>Established — 2012</span>
-      </div>
-
-      <div class="contact-item">
-        <i class="fa-solid fa-location-dot"></i>
-        <span>
-          321 E Delapaz St.<br>
-          Sto. Niño, Marikina City
-        </span>
-      </div>
-
-      <div class="contact-item">
-        <i class="fa-solid fa-phone"></i>
-        <span>0967-137-2243</span>
-      </div>
-
-      <div class="contact-item">
-        <i class="fa-solid fa-envelope"></i>
-        <span>elyknowsenterprisesph@gmail.com</span>
-      </div>
-    </div>
-
-  </div>
-</div>
-    </div>
-
-<!-- PRODUCTS -->
+    <!-- PRODUCTS -->
     <div class="content" id="products">
 
-<div class="product-categories">
-  <button class="active" onclick="filterCategory('womensloafers',this)">Womens Loafers</button>
-  <button onclick="filterCategory('keychain',this)">Shoe Keychain</button>
-  <button onclick="filterCategory('oxford',this)">Oxford</button>
-  <button onclick="filterCategory('mensloafers',this)">Mens Loafers</button>
-  <button onclick="filterCategory('mensslippers',this)">Mens Slippers</button>
-  <button onclick="filterCategory('coinpurse',this)">Coin Purse</button>
-  <button onclick="filterCategory('chukka',this)">Chukka Boots</button>
-</div>
+      <div class="product-categories">
+        <button class="active" onclick="filterCategory('womensloafers',this)">Womens Loafers</button>
+        <button onclick="filterCategory('keychain',this)">Shoe Keychain</button>
+        <button onclick="filterCategory('oxford',this)">Oxford</button>
+        <button onclick="filterCategory('mensloafers',this)">Mens Loafers</button>
+        <button onclick="filterCategory('mensslippers',this)">Mens Slippers</button>
+        <button onclick="filterCategory('coinpurse',this)">Coin Purse</button>
+        <button onclick="filterCategory('chukka',this)">Chukka Boots</button>
+      </div>
 
-<div class="products-grid">
+      <div class="products-grid">
 
-  <!-- WOMENS LOAFERS (6) -->
-  <a href="https://vt.tiktok.com/ZS9J2oVDLmqq6-K7mxS/" target="_blank" class="product-card womensloafers">
-    <img src="wloaf1.png">
-    <div>Lara (Off White)</div>
-    <div class="price"></div>
-  </a>
+        <!-- WOMENS LOAFERS (6) -->
+        <a href="https://vt.tiktok.com/ZS9J2oVDLmqq6-K7mxS/" target="_blank" class="product-card womensloafers">
+          <img src="wloaf1.png">
+          <div>Lara (Off White)</div>
+          <div class="price"></div>
+        </a>
 
-  <a href="https://vt.tiktok.com/ZS9J2oGvb5466-Ef2CM" target="_blank" class="product-card womensloafers">
-    <img src="wloaf2.png">
-    <div>Lira (Red Orange)</div>
-    <div class="price"></div>
-  </a>
+        <a href="https://vt.tiktok.com/ZS9J2oGvb5466-Ef2CM" target="_blank" class="product-card womensloafers">
+          <img src="wloaf2.png">
+          <div>Lira (Red Orange)</div>
+          <div class="price"></div>
+        </a>
 
-  <a href="https://vt.tiktok.com/ZS9J2ocH7fopf-tboom/" target="_blank" class="product-card womensloafers">
-    <img src="wloaf3.png">
-    <div>Lisa (Tan / Burn Orange)</div>
-    <div class="price"></div>
-  </a>
+        <a href="https://vt.tiktok.com/ZS9J2ocH7fopf-tboom/" target="_blank" class="product-card womensloafers">
+          <img src="wloaf3.png">
+          <div>Lisa (Tan / Burn Orange)</div>
+          <div class="price"></div>
+        </a>
 
-  <a href="https://vt.tiktok.com/ZS9J2oDY3VKm9-mQsKp/" target="_blank" class="product-card womensloafers">
-    <img src="wloaf4.png">
-    <div>Luci (Brown)</div>
-    <div class="price"></div>
-  </a>
+        <a href="https://vt.tiktok.com/ZS9J2oDY3VKm9-mQsKp/" target="_blank" class="product-card womensloafers">
+          <img src="wloaf4.png">
+          <div>Luci (Brown)</div>
+          <div class="price"></div>
+        </a>
 
-  <a href="https://vt.tiktok.com/ZS9J2oGR1JuWw-0pXMM/" target="_blank" class="product-card womensloafers">
-    <img src="wloaf5.png">
-    <div>Lufe (Yellow)</div>
-    <div class="price"></div>
-  </a>
+        <a href="https://vt.tiktok.com/ZS9J2oGR1JuWw-0pXMM/" target="_blank" class="product-card womensloafers">
+          <img src="wloaf5.png">
+          <div>Lufe (Yellow)</div>
+          <div class="price"></div>
+        </a>
 
-  <a href="https://vt.tiktok.com/ZS9J2owETHHg7-im8w0/" target="_blank" class="product-card womensloafers">
-    <img src="wloaf6.png">
-    <div>Rose (Tan)</div>
-    <div class="price"></div>
-  </a>
-
-
-  <!-- SHOE KEYCHAIN (1) -->
-  <a href="https://vt.tiktok.com/ZS9Jj11WTQXKU-4NKkP/" target="_blank" class="product-card keychain">
-    <img src="keychain1.png">
-    <div>Shoe Keychain (Assorted)</div>
-    <div class="price"></div>
-  </a>
+        <a href="https://vt.tiktok.com/ZS9J2owETHHg7-im8w0/" target="_blank" class="product-card womensloafers">
+          <img src="wloaf6.png">
+          <div>Rose (Tan)</div>
+          <div class="price"></div>
+        </a>
 
 
-  <!-- OXFORD (3) -->
-  <a href="https://vt.tiktok.com/ZS9Jj1Lg32gMV-9u5wk/" target="_blank" class="product-card oxford">
-    <img src="oxford1.png">
-    <div>Oscar (Black)</div>
-    <div class="price"></div>
-  </a>
-
-  <a href="https://vt.tiktok.com/ZS9Jj1LKBUT9L-LeUU9/" target="_blank" class="product-card oxford">
-    <img src="oxford2.png">
-    <div>Oman (Burgundy)</div>
-    <div class="price"></div>
-  </a>
-
-  <a href="https://vt.tiktok.com/ZS9Jj12PNHNGd-enYW6/" target="_blank" class="product-card oxford">
-    <img src="oxford3.png">
-    <div>Oliver (Black)</div>
-    <div class="price"></div>
-  </a>
+        <!-- SHOE KEYCHAIN (1) -->
+        <a href="https://vt.tiktok.com/ZS9Jj11WTQXKU-4NKkP/" target="_blank" class="product-card keychain">
+          <img src="keychain1.png">
+          <div>Shoe Keychain (Assorted)</div>
+          <div class="price"></div>
+        </a>
 
 
-  <!-- MENS LOAFERS (2) -->
-  <a href="https://vt.tiktok.com/ZS9Jj1NKGSv7P-R5dXy/" target="_blank" class="product-card mensloafers">
-    <img src="mloafer1.png">
-    <div>Lucas (Brown)</div>
-    <div class="price"></div>
-  </a>
+        <!-- OXFORD (3) -->
+        <a href="https://vt.tiktok.com/ZS9Jj1Lg32gMV-9u5wk/" target="_blank" class="product-card oxford">
+          <img src="oxford1.png">
+          <div>Oscar (Black)</div>
+          <div class="price"></div>
+        </a>
 
-  <a href="https://vt.tiktok.com/ZS9Jj1mF1f549-FIVRb/" target="_blank" class="product-card mensloafers">
-    <img src="mloafer2.png">
-    <div>Plain Driving Shoes (Black)</div>
-    <div class="price"></div>
-  </a>
+        <a href="https://vt.tiktok.com/ZS9Jj1LKBUT9L-LeUU9/" target="_blank" class="product-card oxford">
+          <img src="oxford2.png">
+          <div>Oman (Burgundy)</div>
+          <div class="price"></div>
+        </a>
 
-
-  <!-- MENS SLIPPERS (5) -->
-  <a href="https://vt.tiktok.com/ZS9JjNbhpPMtS-bUzxD/" target="_blank" class="product-card mensslippers">
-    <img src="slip1.png">
-    <div>601 (Black, Brown, Tan)</div>
-    <div class="price"></div>
-  </a>
-
-  <a href="https://vt.tiktok.com/ZS9JjNXDkGrCr-2FCKZ/" target="_blank" class="product-card mensslippers">
-    <img src="slip2.png">
-    <div>403 (Black, Brown, Tan)</div>
-    <div class="price"></div>
-  </a>
-
-  <a href="https://vt.tiktok.com/ZS9JjNShp1heA-y5Baa/" target="_blank" class="product-card mensslippers">
-    <img src="slip3.png">
-    <div>510 (Black, Brown, Tan)</div>
-    <div class="price"></div>
-  </a>
-
-  <a href="https://vt.tiktok.com/ZS9JjNxARrG4L-RyTkf/" target="_blank" class="product-card mensslippers">
-    <img src="slip4.png">
-    <div>522 (Black, Brown, Tan)</div>
-    <div class="price"></div>
-  </a>
-
-  <a href="https://vt.tiktok.com/ZS9JjN2RcdPSX-c1Ccv/" target="_blank" class="product-card mensslippers">
-    <img src="slip5.png">
-    <div>526 (Black, Brown, Tan)</div>
-    <div class="price"></div>
-  </a>
+        <a href="https://vt.tiktok.com/ZS9Jj12PNHNGd-enYW6/" target="_blank" class="product-card oxford">
+          <img src="oxford3.png">
+          <div>Oliver (Black)</div>
+          <div class="price"></div>
+        </a>
 
 
-  <!-- COIN PURSE (1) -->
-  <a href="https://vt.tiktok.com/ZS9Jj1DUfcJew-Ymica/" target="_blank" class="product-card coinpurse">
-    <img src="coin1.png">
-    <div>Shoe Coin Purse (Assorted)</div>
-    <div class="price"></div>
-  </a>
+        <!-- MENS LOAFERS (2) -->
+        <a href="https://vt.tiktok.com/ZS9Jj1NKGSv7P-R5dXy/" target="_blank" class="product-card mensloafers">
+          <img src="mloafer1.png">
+          <div>Lucas (Brown)</div>
+          <div class="price"></div>
+        </a>
+
+        <a href="https://vt.tiktok.com/ZS9Jj1mF1f549-FIVRb/" target="_blank" class="product-card mensloafers">
+          <img src="mloafer2.png">
+          <div>Plain Driving Shoes (Black)</div>
+          <div class="price"></div>
+        </a>
 
 
-  <!-- CHUKKA BOOTS (4) -->
-  <a href="https://vt.tiktok.com/ZS9Jj1m1YxT13-CbYeh/" target="_blank" class="product-card chukka">
-    <img src="chukka1.png">
-    <div>Cedie High Cut (Tan)</div>
-    <div class="price"></div>
-  </a>
+        <!-- MENS SLIPPERS (5) -->
+        <a href="https://vt.tiktok.com/ZS9JjNbhpPMtS-bUzxD/" target="_blank" class="product-card mensslippers">
+          <img src="slip1.png">
+          <div>601 (Black, Brown, Tan)</div>
+          <div class="price"></div>
+        </a>
 
-  <a href="https://vt.tiktok.com/ZS9Jj1HFhay4x-pzAoN/" target="_blank" class="product-card chukka">
-    <img src="chukka2.png">
-    <div>Chevy Mid Cut (Tan)</div>
-    <div class="price"></div>
-  </a>
+        <a href="https://vt.tiktok.com/ZS9JjNXDkGrCr-2FCKZ/" target="_blank" class="product-card mensslippers">
+          <img src="slip2.png">
+          <div>403 (Black, Brown, Tan)</div>
+          <div class="price"></div>
+        </a>
 
-  <a href="https://vt.tiktok.com/ZS9Jj1HFhay4x-pzAoN/" target="_blank" class="product-card chukka">
-    <img src="chukka3.png">
-    <div>Chevy Mid Cut (Light Tan)</div>
-    <div class="price"></div>
-  </a>
+        <a href="https://vt.tiktok.com/ZS9JjNShp1heA-y5Baa/" target="_blank" class="product-card mensslippers">
+          <img src="slip3.png">
+          <div>510 (Black, Brown, Tan)</div>
+          <div class="price"></div>
+        </a>
 
-  <a href="https://vt.tiktok.com/ZS9Jj1HFhay4x-pzAoN/" target="_blank" class="product-card chukka">
-    <img src="chukka4.png">
-    <div>Chevy Mid Cut (Brown)</div>
-    <div class="price"></div>
-  </a>
+        <a href="https://vt.tiktok.com/ZS9JjNxARrG4L-RyTkf/" target="_blank" class="product-card mensslippers">
+          <img src="slip4.png">
+          <div>522 (Black, Brown, Tan)</div>
+          <div class="price"></div>
+        </a>
 
-</div>
+        <a href="https://vt.tiktok.com/ZS9JjN2RcdPSX-c1Ccv/" target="_blank" class="product-card mensslippers">
+          <img src="slip5.png">
+          <div>526 (Black, Brown, Tan)</div>
+          <div class="price"></div>
+        </a>
+
+
+        <!-- COIN PURSE (1) -->
+        <a href="https://vt.tiktok.com/ZS9Jj1DUfcJew-Ymica/" target="_blank" class="product-card coinpurse">
+          <img src="coin1.png">
+          <div>Shoe Coin Purse (Assorted)</div>
+          <div class="price"></div>
+        </a>
+
+
+        <!-- CHUKKA BOOTS (4) -->
+        <a href="https://vt.tiktok.com/ZS9Jj1m1YxT13-CbYeh/" target="_blank" class="product-card chukka">
+          <img src="chukka1.png">
+          <div>Cedie High Cut (Tan)</div>
+          <div class="price"></div>
+        </a>
+
+        <a href="https://vt.tiktok.com/ZS9Jj1HFhay4x-pzAoN/" target="_blank" class="product-card chukka">
+          <img src="chukka2.png">
+          <div>Chevy Mid Cut (Tan)</div>
+          <div class="price"></div>
+        </a>
+
+        <a href="https://vt.tiktok.com/ZS9Jj1HFhay4x-pzAoN/" target="_blank" class="product-card chukka">
+          <img src="chukka3.png">
+          <div>Chevy Mid Cut (Light Tan)</div>
+          <div class="price"></div>
+        </a>
+
+        <a href="https://vt.tiktok.com/ZS9Jj1HFhay4x-pzAoN/" target="_blank" class="product-card chukka">
+          <img src="chukka4.png">
+          <div>Chevy Mid Cut (Brown)</div>
+          <div class="price"></div>
+        </a>
+
+      </div>
 
 
       <div class="pagination">
         <button class="page-arrow" onclick="prevCategory()">←</button>
         <button class="page-arrow" onclick="nextCategory()">→</button>
       </div>
-
-
+    </div>
 
   </div>
 </div>
@@ -1159,52 +645,57 @@ body::after {
 
 let currentHighlight = 0;
 let highlightInterval;
+let syncInterval;
 
 function updateHighlight() {
   const track = document.querySelector('.highlight-track');
-  track.style.transform = `translateX(-${currentHighlight * 100}%)`;
+  if (!track) return;
+  
+  if (currentHighlight === 0) {
+    track.style.transition = "none";
+    track.style.transform = `translateX(0%)`;
+    void track.offsetWidth; 
+    track.style.transition = "transform 0.6s ease-in-out";
+  } else {
+    track.style.transition = "transform 0.6s ease-in-out";
+    track.style.transform = `translateX(-${currentHighlight * 100}%)`;
+  }
 }
 
 function nextHighlight() {
+  const track = document.querySelector('.highlight-track');
   const slides = document.querySelectorAll('.highlight-track img');
-  if (!slides.length) return;
+  
+  currentHighlight++;
+  track.style.transition = "transform 0.6s ease-in-out";
+  track.style.transform = `translateX(-${currentHighlight * 100}%)`;
 
-  currentHighlight = (currentHighlight + 1) % slides.length;
-  updateHighlight();
+  // If we just landed on the CLONE (the last image)
+  if (currentHighlight === slides.length - 1) {
+      setTimeout(() => {
+          track.style.transition = "none"; // Kill animation
+          currentHighlight = 0;           // Reset index to real first
+          track.style.transform = `translateX(0%)`;
+      }, 600); // Wait for the 0.6s animation to finish
+  }
 }
 
 function prevHighlight() {
+  const track = document.querySelector('.highlight-track');
   const slides = document.querySelectorAll('.highlight-track img');
-  if (!slides.length) return;
 
-  currentHighlight =
-    (currentHighlight - 1 + slides.length) % slides.length;
-  updateHighlight();
+  if (currentHighlight <= 0) {
+      track.style.transition = "none";
+      currentHighlight = slides.length - 1;
+      track.style.transform = `translateX(-${currentHighlight * 100}%)`;
+      
+      void track.offsetWidth; 
+  }
+  
+  currentHighlight--;
+  track.style.transition = "transform 0.6s ease-in-out";
+  track.style.transform = `translateX(-${currentHighlight * 100}%)`;
 }
-
-/* AUTO PLAY — 10 SECONDS */
-function startHighlightAutoSlide() {
-  stopHighlightAutoSlide();
-  highlightInterval = setInterval(nextHighlight, 10000);
-}
-
-function stopHighlightAutoSlide() {
-  if (highlightInterval) clearInterval(highlightInterval);
-}
-
-/* INIT (script is already at bottom, so DOM is ready) */
-const highlightSlider = document.querySelector('.highlight-slider');
-
-if (highlightSlider) {
-  startHighlightAutoSlide();
-
-  highlightSlider.addEventListener('mouseenter', stopHighlightAutoSlide);
-  highlightSlider.addEventListener('mouseleave', startHighlightAutoSlide);
-}
-
-
-  // script of news slider
-
 
 let currentNews = 0;
 let newsInterval;
@@ -1215,39 +706,76 @@ function updateNews() {
 }
 
 function nextNews() {
+  const track = document.querySelector('.news-track');
   const slides = document.querySelectorAll('.news-track img');
-  currentNews = (currentNews + 1) % slides.length;
-  updateNews();
+  
+  currentNews++;
+  track.style.transition = "transform 0.6s ease-in-out";
+  track.style.transform = `translateX(-${currentNews * 100}%)`;
+
+  if (currentNews === slides.length - 1) {
+      setTimeout(() => {
+          track.style.transition = "none";
+          currentNews = 0;
+          track.style.transform = `translateX(0%)`;
+      }, 600);
+  }
 }
 
 function prevNews() {
+  const track = document.querySelector('.news-track');
   const slides = document.querySelectorAll('.news-track img');
-  currentNews = (currentNews - 1 + slides.length) % slides.length;
-  updateNews();
+
+  if (currentNews <= 0) {
+      track.style.transition = "none";
+      currentNews = slides.length - 1;
+      track.style.transform = `translateX(-${currentNews * 100}%)`;
+      
+      void track.offsetWidth; 
+  }
+  
+  currentNews--;
+  track.style.transition = "transform 0.6s ease-in-out";
+  track.style.transform = `translateX(-${currentNews * 100}%)`;
 }
 
-/* AUTO PLAY — 10 SECONDS */
-function startNewsAutoSlide() {
-  stopNewsAutoSlide();
-  newsInterval = setInterval(nextNews, 10000);
+function autoMoveBoth() {
+  nextHighlight();
+  nextNews();
 }
 
-function stopNewsAutoSlide() {
-  if (newsInterval) clearInterval(newsInterval);
+function startAutoSlide() {
+  stopAutoSlide();
+  syncInterval = setInterval(autoMoveBoth, 10000)
 }
 
-/* Pause on hover (premium UX) */
+function stopAutoSlide() {
+  if (syncInterval) clearInterval(syncInterval);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  const slider = document.querySelector('.news-slider');
-  startNewsAutoSlide();
+  startAutoSlide();
 
-  slider.addEventListener('mouseenter', stopNewsAutoSlide);
-  slider.addEventListener('mouseleave', startNewsAutoSlide);
+  const sliders = document.querySelectorAll('.highlight-slider, .news-slider');
+  sliders.forEach(s => {
+    s.addEventListener('mouseenter', stopAutoSlide);
+    s.addEventListener('mouseleave', startAutoSlide);
+  });
+  
+  const panel = document.querySelector('.panel');
+  const brandBox = document.querySelector('.brand-box');
+
+  if (brandBox && brandBox.classList.contains('d-none')) {
+    panel.style.gridTemplateColumns = "1fr";
+  } else {
+    panel.style.gridTemplateColumns = "1.3fr 2fr";
+  }
 });
-//
-
 
 function showTab(tab, btn) {
+  const panel = document.querySelector('.panel');
+  const brandBox = document.querySelector('.brand-box');
+  
   // Hide all content sections
   document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
   document.getElementById(tab).classList.add('active');
@@ -1263,6 +791,17 @@ function showTab(tab, btn) {
   // If products tab, filter to womensloafers by default
   if (tab === 'products') {
     filterCategory('womensloafers', document.querySelector('.product-categories button.active'));
+  }
+  
+  document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+  document.getElementById(tab).classList.add('active');
+
+  if(tab == 'about' || tab == 'products') {
+    brandBox.classList.add('d-none');
+    panel.style.gridTemplateColumns = "1fr";
+  } else {
+    brandBox.classList.remove('d-none');
+    panel.style.gridTemplateColumns = "1.3fr 2fr";
   }
 }
 
@@ -1385,5 +924,6 @@ document.addEventListener('DOMContentLoaded', updatePagination);
 
 
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
