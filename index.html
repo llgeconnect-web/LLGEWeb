@@ -365,13 +365,13 @@ body {
 <body>
 
 <!-- INTRO -->
-<div id="intro" class="hide">
+<div id="intro" class="show">
   <img src="Logo.png" alt="LLGE Logo" class="intro-logo">
   <div class="continue">PRESS ANYWHERE TO CONTINUE</div>
 </div>
 
 <!-- PARTNERS -->
-<section id="partners" class="show">
+<section id="partners" class="hide">
   <div class="partner-grid">
 
     <div class="llge-mark d-flex flex-column align-items-center h-auto">
@@ -406,6 +406,14 @@ body {
 <script>
 const intro = document.getElementById('intro');
 const partners = document.getElementById('partners');
+
+if (window.location.hash === '#partners') {
+  intro.classList.add('hide');
+  intro.classList.remove('show');
+  partners.classList.add('show');
+  partners.classList.remove('hide');
+  document.body.style.overflow = 'auto';
+}
 
 intro.addEventListener('click', () => {
   intro.classList.add('hide');
