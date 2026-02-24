@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ely Knows | LLGE</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+:root {
+  --orange: #FF7900;
+  --orange-soft: #ff9b3d;
+  --orange-deep: #e66c00;
+  --dark: #1f1f1f;
+  --glass: rgba(255,255,255,0.7);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* BODY & SCROLL */
+body {
+  background: #f7be8f;
+  min-height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* CUSTOM SCROLLBARS */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); border-radius: 999px; }
+::-webkit-scrollbar-thumb { background: linear-gradient(180deg,#000,#3a3a3a); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: #000; }
+* { scrollbar-width: thin; scrollbar-color: #000 rgba(0,0,0,0.05); }
+
+/* LAYOUT WRAPPERS */
+.wrapper {
+  width: 100%;
+  height: 100vh;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* NAV */
+.nav {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.nav button {
+  background: transparent;
+  border: 2px solid #000;
+  padding: 0.6rem 2.2rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.35s ease;
+}
+
+.nav button:hover {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.nav button.active{
+  border: 2px solid #000;
+  border-radius: 999px;
+  background: var(--orange);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* GLASS PANEL */
+.panel {
+  position: relative;
+  flex: 1;
+  padding: 4rem;
+  display: grid;
+  grid-template-columns: 1.3fr 2fr;
+  gap: 4rem;
+  align-items: center;
+  border-radius: 34px;
+  background: linear-gradient(180deg, #fff3e6, #fff8f3);
+  border: 2px solid rgba(255, 121, 0, 0.45);
+  box-shadow: 0 40px 90px rgba(0,0,0,0.18);
+  animation: panelIn 0.9s ease;
+}
+
+@keyframes panelIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* BRAND LOGO AREA */
+.brand-box {
+  background: linear-gradient(145deg, #fff6ee, #fffaf7);
+  border-radius: 30px;
+  padding: 4rem;
+  border: 1.5px solid rgba(255,121,0,0.35);
+  box-shadow: 0 22px 55px rgba(0,0,0,0.12);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.brand-box img {
+  width: 100%;
+  max-width: 520px;
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+/* CONTENT TABS */
+.content { display: none; }
+.content.active { display: grid; gap: 1.8rem; animation: fadeSlide 0.6s ease; }
+
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateX(25px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* SLIDERS (ABOUT SECTION) */
+.about-sliders {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.highlight-wrapper, .news-wrapper { flex: 1; display: flex; flex-direction: column; align-items: center; }
+
+.news-slider, .highlight-slider {
+  position: relative;
+  width: 520px;
+  height: 640px;
+  background: #fff7f0;
+  border-radius: 22px;
+  border: 2px solid rgba(255, 140, 0, 0.35);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.15);
+  overflow: hidden;
+}
+
+.news-track, .highlight-track { display: flex; height: 100%; transition: transform 0.6s ease-in-out; }
+.news-track img, .highlight-track img { min-width: 100%; height: 100%; object-fit: contain; padding: 12px; border-radius: 16px; }
+
+.news-arrow, .highlight-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  border: none;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  font-size: 1.7rem;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.news-arrow:hover, .highlight-arrow:hover { background: var(--orange); }
+.left { left: 12px; }
+.right { right: 12px; }
+
+.news-title, .highlight-title {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 18px;
+  background: linear-gradient(90deg, #ff7a00, #ffb066);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+}
+
+/* CONTACT SECTION */
+.contact-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.5rem; }
+.contact-card {
+  background: linear-gradient(145deg, #fff8bf, #fff3e7);
+  border-radius: 28px;
+  padding: 2.5rem;
+  border: 1.5px solid rgba(255,121,0,0.35);
+  box-shadow: 0 22px 50px rgba(0,0,0,0.12);
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1rem 1.2rem;
+  border-radius: 18px;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(145deg, #fff7f2, #fffdfb);
+  transition: all 0.35s ease;
+  text-decoration: none;
+  color: #000;
+}
+.contact-item:hover { transform: translateY(-6px); box-shadow: 0 15px 30px rgba(255,121,0,0.2); }
+.contact-item i { color: var(--orange); font-size: 1.2rem; }
+
+/* PRODUCTS SECTION */
+#products {
+  max-height: calc(100vh - 260px);
+  overflow-y: auto;
+  padding: 0 2rem;
+}
+.panel.products-view { grid-template-columns: 1fr; }
+.panel.products-view .brand-box { display: flex; }
+
+.product-categories { display: flex; justify-content: center; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap; }
+.product-categories button {
+  border: 1.5px solid rgba(0,0,0,0.8);
+  background: rgba(255,255,255,0.6);
+  padding: 0.5rem 1.6rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.product-categories button.active { background: linear-gradient(90deg,#ff7a00,#ffb066); border-color: transparent; color: #fff; }
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 260px);
+  gap: 2rem;
+  justify-content: center; 
+  
+  width: 100%;
+}
+
+.product-card {
+  background: rgba(255, 255, 255, 0.7); 
+  
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  
+  border-radius: 24px;
+  padding: 1.5rem;
+  
+  border: 1px solid rgba(255, 255, 255, 0.2); 
+  
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  width: 100%;
+  max-width: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  
+  color: #ffffff; 
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+.product-card:hover {
+  transform: translateY(-12px) scale(1.05);
+  background: rgba(255, 255, 255, 0.25);
+  border-color: var(--orange);
+  box-shadow: 0 25px 50px rgba(255, 121, 0, 0.3);
+}
+
+.product-card img {
+  max-width: 100%;
+  height: auto;
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+  transition: transform 0.4s ease;
+}
+
+.product-card:hover img { transform: scale(1.08); }
+
+.product-card div {
+  margin-top: 1rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+/* PAGINATION */
+.pagination { display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 3rem; }
+.page-arrow {
+  border: 2px solid #000;
+  background: transparent;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.page-arrow:hover { background: #000; color: #fff; }
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .panel { grid-template-columns: 1fr; padding: 2.5rem; }
+  .about-sliders { flex-direction: column; align-items: center; }
+  .news-slider, .highlight-slider { width: 100%; max-width: 520px; height: 450px; }
+}
+@media (max-width: 768px) {
+  .contact-grid { grid-template-columns: 1fr; }
+  .nav { gap: 0.5rem; }
+}
+
+.panel {
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+              url('roadtripbg.jpg');
+  background-size: cover;
+  background-position: center;
+  color: white;
+}
+
+.btn-back {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 2px solid #000;
+  padding: 0.6rem 2.2rem;
+  border-radius: 999px;
+  color: black;
+  padding: 0.6rem 1.8rem;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-back:hover {
+  background: var(--orange); /* Uses your orange variable */
+  border-color: var(--orange);
+  color: white;
+  transform: translateX(-5px); /* Subtle "nudge" to the left */
+  box-shadow: 0 10px 25px rgba(255, 121, 0, 0.3);
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+  <!-- NAV -->
+  <div class="nav">
+    <div>
+      <a href="index.html#partners" class="btn btn-back rounded-pill">
+        <i class="fas fa-arrow-left me-2"></i> BACK TO HOMEPAGE
+      </a>
+    </div>
+    <button class="active" onclick="showTab('about', this)">ABOUT</button>
+    <button onclick="showTab('contact', this)">CONTACT</button>
+    <button onclick="showTab('products', this)">PRODUCTS</button>
+  </div>
+
+  <!-- PANEL -->
+  <div class="panel">
+
+    <!-- LEFT -->
+    <div class="brand-box d-none">
+      <!-- 🔁 CHANGE THIS IMAGE PER BRAND -->
+      <img src="roadtrip-logo.jpg" alt="Brand Logo">
+    </div>
+
+    <!-- ABOUT -->
+    <div class="content active" id="about">
+
+      <div class="about-sliders">
+
+        <!-- HIGHLIGHTS -->
+        <div class="highlight-wrapper">
+          <h2 class="highlight-title">Highlights</h2>
+
+          <div class="highlight-slider">
+            <div class="highlight-track">
+              <img src="highlights/boss-ditsoy.png">
+              <img src="highlights/forester.png">
+              <img src="highlights/sabungero-promo.png">
+              <img src="highlights/trekker.png">
+            </div>
+
+            <button class="highlight-arrow left" onclick="prevHighlight()">‹</button>
+            <button class="highlight-arrow right" onclick="nextHighlight()">›</button>
+          </div>
+        </div>
+
+            <!-- WHAT'S NEW -->
+        <div class="news-wrapper">
+          <h2 class="news-title">What's New</h2>
+
+          <div class="news-slider">
+            <div class="news-track">
+              <img src="whats-new/story.png">
+              <img src="whats-new/visit-us.png">
+            </div>
+
+            <button class="news-arrow left" onclick="prevNews()">‹</button>
+            <button class="news-arrow right" onclick="nextNews()">›</button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- CONTACT -->
+
+    <div class="content" id="contact">
+
+      <div class="contact-luxury">
+
+        <h2 class="contact-title">Connect with Roadtrip</h2>
+
+        <div class="contact-grid">
+
+          <!-- SOCIAL ACCOUNTS -->
+          <div class="contact-card">
+            <h4 style="color: black;"><b>Social Presence</b></h4>
+
+            <a href="https://www.facebook.com/roadtripsandalz" target="_blank" class="contact-item">
+              <i class="fab fa-facebook"></i>
+              <span>Facebook — Roadtrip Sandals</span>
+            </a>
+
+            <a href="https://www.shopee.ph/marikinasandalsroadtrip" target="_blank" class="contact-item">
+              <i class="fa-solid fa-store"></i>
+              <span>Shopee — Roadtrip Sandals</span>
+            </a>
+
+            <a href="https://www.lazada.com.ph/shop/roadtrip-sandals-marikina" target="_blank" class="contact-item">
+              <i class="fa-solid fa-store"></i>
+              <span>Lazada — Roadtrip Sandals</span>
+            </a>
+
+            <a href="https://vt.tiktok.com/ZSDxw9b6W/?page=TikTokShop" target="_blank" class="contact-item">
+              <i class="fab fa-tiktok"></i>
+              <span>TikTok — Roadtrip Sandals</span>
+            </a>
+          </div>
+
+          <!-- BUSINESS DETAILS -->
+          <div class="contact-card">
+            <h3 style="color: black;"><b>Business Information</b></h3>
+
+            <div class="contact-item">
+              <i class="fa-solid fa-circle-info"></i>
+              <span>Super Heavy Duty Outdoor, Hiking, Trekking Tire Sole Sandals and Slippers by OUTDOORS FOOTWEAR MANUFACTURING.</span>
+            </div>
+
+            <div class="contact-item">
+              <i class="fa-solid fa-location-dot"></i>
+              <span>
+                91 E. DELA PAZ STREET. <br>
+                SAN ROQUE, MARIKINA CITY
+              </span>
+            </div>
+
+            <div class="contact-item">
+              <i class="fa-solid fa-phone"></i>
+              <span></span>
+            </div>
+
+            <div class="contact-item">
+              <i class="fa-solid fa-envelope"></i>
+              <span>roadtripsandals@gmail.com</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCTS -->
+    <div class="content" id="products">
+
+      <div class="product-categories">
+        <button class="active" onclick="filterCategory('rsb2Straps',this)">RSB 2 Straps</button>
+        <button onclick="filterCategory('birken',this)">Birken</button>
+        <button onclick="filterCategory('ladysSlippers',this)">Lady's Slippers</button>
+        <button onclick="filterCategory('mensSandals',this)">Men's Sandals</button>
+        <button onclick="filterCategory('mensSlippers',this)">Men's Slippers</button>
+      </div>
+
+      <div class="products-grid">
+
+        <!-- RSB 2 Straps -->
+        <a href="https://vt.tiktok.com/ZS9JjqQmdyfYB-MTV9v/" target="_blank" class="product-card rsb2Straps">
+          <img src="products/rsb-2-straps/2-strap.png">
+          <div>RSB 2 Straps</div>
+          <div class="price"></div>
+        </a>
+
+        <!-- Birken -->
+        <a href="https://vt.tiktok.com/ZS9JUYw9w4b6k-LYsF8/" target="_blank" class="product-card birken">
+          <img src="products/birken/birks-1-strap.png">
+          <div>Birken 1 Strap</div>
+          <div class="price"></div>
+        </a>
+
+        <a href="https://vt.tiktok.com/ZS9JDnf1eRPtH-MBqpc/" target="_blank" class="product-card birken">
+          <img src="products/birken/birks-2-straps.png">
+          <div>Birken 2 Straps</div>
+          <div class="price"></div>
+        </a>
+        
+        <!-- Lady's Slippers -->
+        <a href="https://vt.tiktok.com/ZS9JUYQdxFVTB-IFdPH/" target="_blank" class="product-card ladysSlippers">
+          <img src="products/ladys-slippers/lady-rover-thin.png">
+          <div>Lady Rover Thin</div>
+          <div class="price"></div>
+        </a>
+        
+        <a href="https://vt.tiktok.com/ZS9JUjEF5ukDd-fR5WH/" target="_blank" class="product-card ladysSlippers">
+          <img src="products/ladys-slippers/l-rsberks.png">
+          <div>L. RSBERKS # 2</div>
+          <div class="price"></div>
+        </a>
+        
+        <a href="https://vt.tiktok.com/ZS9JU6u3UQQHd-59F5T/" target="_blank" class="product-card ladysSlippers">
+          <img src="products/ladys-slippers/lady-rover.png">
+          <div>Lady Rover</div>
+          <div class="price"></div>
+        </a>
+
+        <!-- Men's Sandals -->
+        <a href="https://vt.tiktok.com/ZS9JDnXwSDpRr-jkh9w/" target="_blank" class="product-card mensSandals">
+          <img src="products/mens-sandals/biker.png">
+          <div>Biker</div>
+          <div class="price"></div>
+        </a>
+
+        <a href="https://vt.tiktok.com/ZS9Jj4YHhxdpn-pnBFE/" target="_blank" class="product-card mensSandals">
+          <img src="products/mens-sandals/cruiser.png">
+          <div>Cruiser</div>
+          <div class="price"></div>
+        </a>
+
+        <a href="https://vt.tiktok.com/ZS9JDG9wneVeT-agQ4e/" target="_blank" class="product-card mensSandals">
+          <img src="products/mens-sandals/forester.png">
+          <div>Forester</div>
+          <div class="price"></div>
+        </a>
+
+        <a href="https://vt.tiktok.com/ZS9JDWGdWKM86-ETTOf/" target="_blank" class="product-card mensSandals">
+          <img src="products/mens-sandals/hiker-plus.png">
+          <div>Hiker Plus</div>
+          <div class="price"></div>
+        </a>
+
+        <a href="https://vt.tiktok.com/ZS9JU2jG7B4BP-FZgAn/" target="_blank" class="product-card mensSandals">
+          <img src="products/mens-sandals/survivor.png">
+          <div>Survivor</div>
+          <div class="price"></div>
+        </a>
+
+        <a href="https://vt.tiktok.com/ZS9JDtaPA2DSB-RvQuc/" target="_blank" class="product-card mensSandals">
+          <img src="products/mens-sandals/trekker.png">
+          <div>Trekker</div>
+          <div class="price"></div>
+        </a>
+        
+        <!-- Men's Slippers -->
+        <a href="https://vt.tiktok.com/ZS9JjqYfqTUPm-iONyo/" target="_blank" class="product-card mensSlippers">
+          <img src="products/mens-slippers/boss-ditsoy.png">
+          <div>Boss Ditsoy</div>
+          <div class="price"></div>
+        </a>
+        
+        <a href="https://vt.tiktok.com/ZS9JjtE5YMwDR-nLDJP/" target="_blank" class="product-card mensSlippers">
+          <img src="products/mens-slippers/sabungero.png">
+          <div>Roadtrip Sabungero</div>
+          <div class="price"></div>
+        </a>
+        
+        <a href="https://vt.tiktok.com/ZS9JD7oohpWPB-YgEvj/" target="_blank" class="product-card mensSlippers">
+          <img src="products/mens-slippers/infinity-2.png">
+          <div>Infinity</div>
+          <div class="price"></div>
+        </a>
+        
+        <a href="https://vt.tiktok.com/ZS9JUFotk3Ev7-62Q6s/" target="_blank" class="product-card mensSlippers">
+          <img src="products/mens-slippers/kumander.png">
+          <div>Kumander</div>
+          <div class="price"></div>
+        </a>
+        
+        <a href="https://vt.tiktok.com/ZS9JUYYbP9rwv-08r4x/" target="_blank" class="product-card mensSlippers">
+          <img src="products/mens-slippers/rain-or-shine.png">
+          <div>Rain or Shine</div>
+          <div class="price"></div>
+        </a>
+        
+        <a href="https://vt.tiktok.com/ZS9Jjqg6Yuun5-3oSJy/" target="_blank" class="product-card mensSlippers">
+          <img src="products/mens-slippers/sabungero-slides.png">
+          <div>Roadtrip Sabungero Slides</div>
+          <div class="price"></div>
+        </a>
+        
+        <a href="https://vt.tiktok.com/ZS9JDGsrfADka-tIw3v/" target="_blank" class="product-card mensSlippers">
+          <img src="products/mens-slippers/sabungero-promo.png">
+          <div>Sabungero Promo</div>
+          <div class="price"></div>
+        </a>
+
+      </div>
+
+
+      <div class="pagination">
+        <button class="page-arrow" onclick="prevCategory()">←</button>
+        <button class="page-arrow" onclick="nextCategory()">→</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+
+  /* =========================
+   HIGHLIGHTS SLIDER SCRIPT
+   ========================= */
+
+/* =========================
+   HIGHLIGHTS SLIDER SCRIPT
+   ========================= */
+
+let currentHighlight = 0;
+let highlightInterval;
+let syncInterval;
+
+function updateHighlight() {
+  const track = document.querySelector('.highlight-track');
+  if (!track) return;
+  
+  if (currentHighlight === 0) {
+    track.style.transition = "none";
+    track.style.transform = `translateX(0%)`;
+    void track.offsetWidth; 
+    track.style.transition = "transform 0.6s ease-in-out";
+  } else {
+    track.style.transition = "transform 0.6s ease-in-out";
+    track.style.transform = `translateX(-${currentHighlight * 100}%)`;
+  }
+}
+
+function nextHighlight() {
+  const track = document.querySelector('.highlight-track');
+  const slides = document.querySelectorAll('.highlight-track img');
+  
+  currentHighlight++;
+  track.style.transition = "transform 0.6s ease-in-out";
+  track.style.transform = `translateX(-${currentHighlight * 100}%)`;
+
+  // If we just landed on the CLONE (the last image)
+  if (currentHighlight === slides.length - 1) {
+      setTimeout(() => {
+          track.style.transition = "none"; // Kill animation
+          currentHighlight = 0;           // Reset index to real first
+          track.style.transform = `translateX(0%)`;
+      }, 600); // Wait for the 0.6s animation to finish
+  }
+}
+
+function prevHighlight() {
+  const track = document.querySelector('.highlight-track');
+  const slides = document.querySelectorAll('.highlight-track img');
+
+  if (currentHighlight <= 0) {
+      track.style.transition = "none";
+      currentHighlight = slides.length - 1;
+      track.style.transform = `translateX(-${currentHighlight * 100}%)`;
+      
+      void track.offsetWidth; 
+  }
+  
+  currentHighlight--;
+  track.style.transition = "transform 0.6s ease-in-out";
+  track.style.transform = `translateX(-${currentHighlight * 100}%)`;
+}
+
+let currentNews = 0;
+let newsInterval;
+
+function updateNews() {
+  const track = document.querySelector('.news-track');
+  track.style.transform = `translateX(-${currentNews * 100}%)`;
+}
+
+function nextNews() {
+  const track = document.querySelector('.news-track');
+  const slides = document.querySelectorAll('.news-track img');
+  
+  currentNews++;
+  track.style.transition = "transform 0.6s ease-in-out";
+  track.style.transform = `translateX(-${currentNews * 100}%)`;
+
+  if (currentNews === slides.length - 1) {
+      setTimeout(() => {
+          track.style.transition = "none";
+          currentNews = 0;
+          track.style.transform = `translateX(0%)`;
+      }, 600);
+  }
+}
+
+function prevNews() {
+  const track = document.querySelector('.news-track');
+  const slides = document.querySelectorAll('.news-track img');
+
+  if (currentNews <= 0) {
+      track.style.transition = "none";
+      currentNews = slides.length - 1;
+      track.style.transform = `translateX(-${currentNews * 100}%)`;
+      
+      void track.offsetWidth; 
+  }
+  
+  currentNews--;
+  track.style.transition = "transform 0.6s ease-in-out";
+  track.style.transform = `translateX(-${currentNews * 100}%)`;
+}
+
+function autoMoveBoth() {
+  nextHighlight();
+  nextNews();
+}
+
+function startAutoSlide() {
+  stopAutoSlide();
+  syncInterval = setInterval(autoMoveBoth, 10000)
+}
+
+function stopAutoSlide() {
+  if (syncInterval) clearInterval(syncInterval);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  startAutoSlide();
+
+  const sliders = document.querySelectorAll('.highlight-slider, .news-slider');
+  sliders.forEach(s => {
+    s.addEventListener('mouseenter', stopAutoSlide);
+    s.addEventListener('mouseleave', startAutoSlide);
+  });
+  
+  const panel = document.querySelector('.panel');
+  const brandBox = document.querySelector('.brand-box');
+
+  if (brandBox && brandBox.classList.contains('d-none')) {
+    panel.style.gridTemplateColumns = "1fr";
+  } else {
+    panel.style.gridTemplateColumns = "1.3fr 2fr";
+  }
+});
+
+function showTab(tab, btn) {
+  const panel = document.querySelector('.panel');
+  const brandBox = document.querySelector('.brand-box');
+  
+  // Hide all content sections
+  document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+  document.getElementById(tab).classList.add('active');
+
+  // Update nav buttons
+  document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  // Toggle products-view class for panel
+  document.querySelector('.panel')
+    .classList.toggle('products-view', tab === 'products');
+
+  // If products tab, filter to rsb2Straps by default
+  if (tab === 'products') {
+    filterCategory('rsb2Straps', document.querySelector('.product-categories button.active'));
+  }
+  
+  document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+  document.getElementById(tab).classList.add('active');
+
+  if(tab == 'about' || tab == 'products') {
+    brandBox.classList.add('d-none');
+    panel.style.gridTemplateColumns = "1fr";
+  } else {
+    brandBox.classList.remove('d-none');
+    panel.style.gridTemplateColumns = "1.3fr 2fr";
+  }
+}
+
+
+
+
+let currentCategoryIndex = 0;
+const categories = [
+  'rsb2Straps',
+  'birken',
+  'ladysSlippers',
+  'mensSandals',
+  'mensSlippers',
+];
+
+function filterCategory(category, btn = null) {
+  currentCategoryIndex = categories.indexOf(category);
+
+  const buttons = document.querySelectorAll('.product-categories button');
+  buttons.forEach(b => b.classList.remove('active'));
+  if (btn) buttons[currentCategoryIndex].classList.add('active');
+
+  const allCards = document.querySelectorAll('.product-card');
+
+  // Start fade-out
+  allCards.forEach(card => {
+    card.style.transition = 'opacity 0.3s ease';
+    card.style.opacity = '0';
+  });
+
+  // After fade-out, change display and fade-in
+  setTimeout(() => {
+    allCards.forEach(card => {
+      const show = card.classList.contains(category);
+      card.style.display = show ? 'block' : 'none';
+    });
+
+    // Fade-in visible cards
+    allCards.forEach(card => {
+      if (card.style.display !== 'none') {
+        card.style.opacity = '0';
+        setTimeout(() => {
+          card.style.transition = 'opacity 0.5s ease';
+          card.style.opacity = '1';
+        }, 50);
+      }
+    });
+  }, 300);
+}
+
+function nextCategory() {
+  currentCategoryIndex = (currentCategoryIndex + 1) % categories.length;
+  const nextCat = categories[currentCategoryIndex];
+  filterCategory(nextCat, document.querySelectorAll('.product-categories button')[currentCategoryIndex]);
+}
+
+function prevCategory() {
+  currentCategoryIndex =
+    (currentCategoryIndex - 1 + categories.length) % categories.length;
+  const prevCat = categories[currentCategoryIndex];
+  filterCategory(prevCat, document.querySelectorAll('.product-categories button')[currentCategoryIndex]);
+}
+
+// Initialize default category
+filterCategory('rsb2Straps', document.querySelector('.product-categories button.active'));
+
+// PAGINATION SETUP
+const productsPerPage = 6; // number of products per page
+let currentPage = 1;
+
+function updatePagination() {
+  const allProducts = document.querySelectorAll('.products-grid .product-card');
+  const totalPages = Math.ceil(allProducts.length / productsPerPage);
+
+  // Hide all products first
+  allProducts.forEach(p => (p.style.display = 'none'));
+
+  // Show only products of the current page
+  const start = (currentPage - 1) * productsPerPage;
+  const end = start + productsPerPage;
+  const currentProducts = [...allProducts].slice(start, end);
+
+  currentProducts.forEach(p => {
+    p.style.display = 'flex';
+    p.style.opacity = '0';
+    p.style.transform = 'translateY(20px)';
+    p.style.transition = 'all 0.4s ease';
+    setTimeout(() => {
+      p.style.opacity = '1';
+      p.style.transform = 'translateY(0)';
+    }, 50);
+  });
+
+  // Update page buttons (optional, can show dots or numbers later)
+}
+
+// Go to next page
+function nextCategory() {
+  const allProducts = document.querySelectorAll('.products-grid .product-card');
+  const totalPages = Math.ceil(allProducts.length / productsPerPage);
+  currentPage = currentPage < totalPages ? currentPage + 1 : 1;
+  updatePagination();
+}
+
+// Go to previous page
+function prevCategory() {
+  const allProducts = document.querySelectorAll('.products-grid .product-card');
+  const totalPages = Math.ceil(allProducts.length / productsPerPage);
+  currentPage = currentPage > 1 ? currentPage - 1 : totalPages;
+  updatePagination();
+}
+
+// Initialize first page
+document.addEventListener('DOMContentLoaded', updatePagination);
+</script>
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

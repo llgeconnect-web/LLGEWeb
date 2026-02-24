@@ -351,6 +351,64 @@ body::before {
     inset 0 0 70px rgba(255,255,255,0.35);
 }
 
+.roadtirp-card {
+  background: #fff8bf;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+
+  box-shadow: 
+    0 35px 90px rgba(212, 196, 115, 0.4), 
+    inset 0 0 50px rgba(255, 255, 255, 0.8);
+
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.roadtirp-card::before {
+  content: "";
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: 280px;
+  height: 280px;
+  
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 230, 100, 0.5) 40%,
+    rgba(255, 248, 191, 0.2) 70%,
+    transparent 100%
+  );
+  
+  filter: blur(5px); 
+  border-radius: 50%;
+  animation: roadtripPulse 5s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes roadtripPulse {
+  0% { 
+    transform: scale(0.9) translate(0, 0); 
+    opacity: 0.6; 
+  }
+  50% { 
+    transform: scale(1.15) translate(-10px, 10px); 
+    opacity: 1; 
+  }
+  100% { 
+    transform: scale(0.9) translate(0, 0); 
+    opacity: 0.6; 
+  }
+}
+
+.roadtirp-card:hover {
+  transform: translateY(-15px) scale(1.02);
+  background: #fffbe0; /* Slightly brightens on hover */
+  box-shadow: 
+    0 50px 100px rgba(212, 196, 115, 0.5), 
+    inset 0 0 60px rgba(255, 255, 255, 1);
+}
+
 body {
   background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
               url('shoesbg.jpg');
@@ -389,12 +447,15 @@ body {
         <div class="brand-card ely-card" data-href="ely-knows.html">
         <img src="brand1.png" alt="Ely Knows">
       </div>
+      <div class="brand-card roadtirp-card" data-href="roadtrip/roadtrip-sandals.html">
+        <img src="roadtrip/roadtrip-logo.jpg" alt="Roadtrip Sandals">
+      </div>
       <!-- <div class="brand-card" data-href="konzept.html">
         <img src="brand2.png" alt="Konzept">
       </div> -->
-      <div class="brand-card" data-href="nifty-shoes.html">
+      <!-- <div class="brand-card" data-href="nifty-shoes.html">
         <img src="brand3.png" alt="Nifty Shoes">
-      </div>
+      </div> -->
       <!-- <div class="brand-card" data-href="zapateria.html">
         <img src="brand4.png" alt="Zapateria">
       </div> -->
