@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nifty Shoes | LLGE</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #ede6df;
+  --dark: #1f1f1f;
+  --glass: rgba(255,255,255,0.65);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* BODY & SCROLL */
+body {
+  background: radial-gradient(circle at top, #f5efe9, #e5ddd4);
+  min-height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* CUSTOM SCROLLBAR */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.05);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg,#000,#3a3a3a);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #000;
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #000 rgba(0,0,0,0.05);
+}
+
+/* SCROLLABLE PRODUCTS AREA */
+#products {
+  max-height: calc(100vh - 260px);
+  overflow-y: auto;
+  padding-right: 0.8rem;
+}
+
+/* SOFT FLOATING LIGHTS */
+body::before, body::after {
+  content: "";
+  position: fixed;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.35;
+  z-index: -1;
+}
+
+body::before {
+  background: #ffffff;
+  top: -120px;
+  left: -120px;
+}
+
+body::after {
+  background: #cfc6bd;
+  bottom: -120px;
+  right: -120px;
+}
+
+/* MAIN WRAPPER */
+.wrapper {
+  width: 100%;
+  height: 100vh;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* NAV */
+.nav {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.nav button {
+  background: transparent;
+  border: 2px solid #000;
+  padding: 0.6rem 2.2rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.35s ease;
+}
+
+.nav button.active,
+.nav button:hover {
+  background: #000;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* GLASS PANEL */
+.panel {
+  flex: 1;
+  background: radial-gradient(circle at top, #f5efe9, #e5ddd4);
+  border-radius: 34px;
+  box-shadow: 0 40px 90px rgba(0,0,0,0.15);
+  padding: 4rem;
+  display: grid;
+  grid-template-columns: 1.3fr 2fr;
+  gap: 4rem;
+  align-items: center;
+  animation: panelIn 0.9s ease;
+}
+
+@keyframes panelIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* LEFT BRAND */
+.brand-box {
+  background: linear-gradient(145deg, #ffffff, #f2ede7);
+  border-radius: 30px;
+  padding: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05),
+              0 30px 70px rgba(0,0,0,0.1);
+}
+
+.brand-box img {
+  width: 100%;
+  max-width: 520px;
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+/* RIGHT CONTENT */
+.content {
+  display: none;
+}
+
+.content.active {
+  display: grid;
+  gap: 1.8rem;
+  animation: fadeSlide 0.6s ease;
+}
+
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateX(25px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ABOUT INFO */
+.info {
+  background: linear-gradient(145deg, #ffffff, #f3eee9);
+  padding: 1.2rem 2rem;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  font-size: 0.85rem;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+}
+
+.info i {
+  font-size: 1.1rem;
+}
+
+/* SOCIALS */
+.socials {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.8rem;
+}
+
+.social {
+  background: linear-gradient(145deg, #ffffff, #f2ede7);
+  border-radius: 22px;
+  padding: 1.6rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.35s ease;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.1);
+}
+
+.social i {
+  font-size: 1.4rem;
+}
+
+.social:hover {
+  transform: translateY(-8px) scale(1.04);
+}
+
+/* PRODUCTS */
+.products {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.product {
+  background: linear-gradient(145deg, #ffffff, #f3eee9);
+  border-radius: 24px;
+  padding: 2rem;
+  height: 140px;
+  box-shadow: 0 20px 45px rgba(0,0,0,0.1);
+}
+
+
+
+/* RESPONSIVE */
+@media (max-width: 1000px) {
+  .panel {
+    grid-template-columns: 1fr;
+    padding: 3rem;
+  }
+
+  .socials {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* PRODUCTS FULL WIDTH MODE */
+.panel.products-view {
+  grid-template-columns: 1fr;
+}
+
+/* HIDE LOGO IN PRODUCTS */
+.panel.products-view .brand-box {
+  display: none;
+}
+
+/* PRODUCT LAYOUT (REFERENCE STYLE) */
+.product-categories {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.product-categories button {
+  border: 1.5px solid #000;
+  background: transparent;
+  padding: 0.45rem 1.6rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  cursor: pointer;
+}
+
+.product-categories button.active {
+  background: #000;
+  color: #fff;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem;
+  text-align: center;
+}
+
+.price {
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-top: 0.2rem;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+.page-arrow {
+  border: 2px solid #000;
+  background: transparent;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+}
+
+/* PRODUCT HOVER (LUXURY ZOOM) */
+
+
+.product-card {
+  background: rgba(255, 255, 255, 0.7); 
+  
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  
+  border-radius: 24px;
+  padding: 1.5rem;
+  
+  border: 1px solid rgba(255, 255, 255, 0.2); 
+  
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  width: 100%;
+  max-width: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  
+  color: #ffffff; 
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+.product-card:hover {
+  transform: translateY(-12px) scale(1.05);
+  background: rgba(255, 255, 255, 0.25);
+  border-color: var(--glass-dark);
+  box-shadow: 0 25px 50px rgba(255, 121, 0, 0.3);
+}
+
+.product-card img {
+  max-width: 100%;
+  height: auto;
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+  transition: transform 0.4s ease;
+}
+
+.product-card:hover img { transform: scale(1.08); }
+
+.product-card div {
+  margin-top: 1rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.price {
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-top: 0.2rem;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+.page-arrow {
+  border: 2px solid #000;
+  background: transparent;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+
+/* PAGINATION */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+.page-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: 2px solid #000;
+  background: transparent;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.page-btn.active {
+  background: #000;
+  color: #fff;
+}
+
+.page-arrow {
+  border: 2px solid #000;
+  background: transparent;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+/* CATEGORY ACTIVE STATE */
+.product-categories button {
+  transition: all 0.3s ease;
+}
+
+.product-categories button:hover {
+  background: #000;
+  color: #fff;
+}
+
+
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .panel {
+    grid-template-columns: 1fr;
+    justify-items: center; /* <-- center content horizontally */
+    text-align: center;    /* <-- optional: center text inside */
+    padding: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    padding: 1.5rem;
+  }
+
+  .panel {
+    padding: 2rem;
+    justify-items: center;  /* center content */
+    text-align: center;     /* center text inside panel */
+    gap: 1.5rem;            /* reduce gap for smaller screens */
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center; /* center each product */
+  }
+}
+
+@media (max-width: 480px) {
+  .panel {
+    padding: 1.5rem;
+    justify-items: center;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .product-grid {
+    grid-template-columns: 1fr;
+    justify-items: center; /* center products */
+  }
+
+  .nav button {
+    padding: 0.5rem 1.4rem;
+  }
+
+  .brand-box img {
+    max-width: 80%; /* scale brand logo down on small screens */
+  }
+}
+
+
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+  <!-- NAV -->
+  <div class="nav">
+    <button class="active" onclick="showTab('about', this)">ABOUT</button>
+    <button onclick="showTab('contact', this)">CONTACT</button>
+    <button onclick="showTab('products', this)">PRODUCTS</button>
+  </div>
+
+  <!-- PANEL -->
+  <div class="panel">
+
+    <!-- LEFT -->
+    <div class="brand-box">
+      <!-- 🔁 CHANGE THIS IMAGE PER BRAND -->
+      <img src="nifty-logo.png" alt="Brand Logo">
+    </div>
+
+    <!-- ABOUT -->
+<div class="content active" id="about">
+  <div class="info">
+    <i class="fa-solid fa-circle-check"></i> VERIFIED BRAND
+  </div>
+  <div class="info">
+    <i class="fa-solid fa-calendar"></i> YEAR OF ESTABLISHMENT
+  </div>
+  <div class="info">
+    <i class="fa-solid fa-briefcase"></i> NATURE OF BUSINESS
+  </div>
+</div>
+
+
+    <!-- CONTACT -->
+    <div class="content" id="contact">
+      <div class="socials">
+        <div class="social"><i class="fab fa-facebook"></i> Facebook</div>
+        <div class="social"><i class="fab fa-instagram"></i> Instagram</div>
+        <div class="social"><i class="fab fa-x-twitter"></i> Twitter</div>
+        <div class="social"><i class="fab fa-youtube"></i> YouTube</div>
+        <div class="social"><i class="fab fa-telegram"></i> Telegram</div>
+        <div class="social"><i class="fa-solid fa-envelope"></i> Email</div>
+      </div>
+    </div>
+
+<!-- PRODUCTS -->
+    <div class="content" id="products">
+
+      <div class="product-categories">
+        <button onclick="filterCategory('shoes',this)">SHOES</button>
+      </div>
+
+      <div class="product-grid">
+        <a href="" target="_blank" class="product-card shoes">
+          <img src="products/gail.jpg">
+          <div>Gail</div>
+          <div class="price"></div>
+        </a>
+        <a href="" target="_blank" class="product-card shoes">
+          <img src="products/abby.jpg">
+          <div>Abby</div>
+          <div class="price"></div>
+        </a>
+      </div>
+
+      <div class="pagination">
+        <button class="page-arrow" onclick="prevCategory()">←</button>
+        <button class="page-arrow" onclick="nextCategory()">→</button>
+      </div>
+
+
+
+  </div>
+</div>
+
+<script>
+function showTab(tab, btn) {
+  document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+  document.getElementById(tab).classList.add('active');
+
+  document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  document.querySelector('.panel')
+    .classList.toggle('products-view', tab === 'products');
+}
+
+const categories = ['all','bags','belt','shoes','wallet'];
+let currentCategoryIndex = 0;
+
+function filterCategory(category, btn=null) {
+  currentCategoryIndex = categories.indexOf(category);
+
+  const buttons = document.querySelectorAll('.product-categories button');
+  buttons.forEach(b => b.classList.remove('active'));
+
+  if (btn) buttons[currentCategoryIndex].classList.add('active');
+
+  document.querySelectorAll('.product-card').forEach(card => {
+    card.style.display =
+      category === 'all' || card.classList.contains(category)
+        ? 'block'
+        : 'none';
+  });
+}
+
+function nextCategory() {
+  currentCategoryIndex = (currentCategoryIndex + 1) % categories.length;
+  filterCategory(categories[currentCategoryIndex]);
+}
+
+function prevCategory() {
+  currentCategoryIndex =
+    (currentCategoryIndex - 1 + categories.length) % categories.length;
+  filterCategory(categories[currentCategoryIndex]);
+}
+
+filterCategory('all');
+</script>
+
+
+
+
+
+</body>
+</html>
